@@ -15,7 +15,7 @@ def start_game() :
     board.columns = FILES
     board.index = RANKS
     
-    #def get_available_moves(self, board, pos, col) :
+    '''
     p1 = cp.Pawn('white')
     p2 = cp.Pawn('black')
     p3 = cp.Pawn('white')
@@ -27,8 +27,14 @@ def start_game() :
     print(moves)
     moves = p3.get_available_moves(board, ('e', 5))
     print(moves)
+    '''
     
     p4 = cp.Knight('white')
+    board['d'].loc[6] = cp.Pawn('black')
+    board['d'].loc[2] = cp.Pawn('white')
+    print(board)
+    print(board['d'].loc[6].get_colour())
+    print(board['d'].loc[2].get_colour())
     moves = p4.get_available_moves(board, ('e', 4))
     print(moves)
     moves = p4.get_available_moves(board, ('g', 4))

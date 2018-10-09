@@ -8,6 +8,9 @@ class Pawn() :
         self.piece_type = 'pawn'
         self.colour = colour
         self.enpassant = False
+
+    def get_colour(self) :
+        return self.colour
         
     def get_available_moves(self, board, pos) :
         
@@ -20,12 +23,12 @@ class Pawn() :
             # check if a piece can be taken left
             if left_file :
                 if board[left_file][pos[1]+1] :
-                    if board[left_file][pos[1]+1].get_colour != 'white' :
+                    if board[left_file][pos[1]+1].get_colour() != 'white' :
                         moves.append((left_file, pos[1]+1))
             # check if a piece can be taken right
             if right_file :
                 if board[right_file][pos[1]+1] :
-                    if board[right_file][pos[1]+1].get_colour != 'white' :
+                    if board[right_file][pos[1]+1].get_colour() != 'white' :
                         moves.append((right_file, pos[1]+1))
             # check if it can take one step
             if not board[pos[0]][pos[1]+1] :
@@ -44,12 +47,12 @@ class Pawn() :
             # check if a piece can be taken left
             if left_file :
                 if board[left_file][pos[1]-1] :
-                    if board[left_file][pos[1]-1].get_colour != 'black' :
+                    if board[left_file][pos[1]-1].get_colour() != 'black' :
                         moves.append((left_file, pos[1]-1))
             # check if a piece can be taken right
             if right_file :
                 if board[right_file][pos[1]-1] :
-                    if board[right_file][pos[1]-1].get_colour != 'black' :
+                    if board[right_file][pos[1]-1].get_colour() != 'black' :
                         moves.append((right_file, pos[1]-1))
             # check if it can take one step
             if not board[pos[0]][pos[1]-1] :
@@ -76,6 +79,9 @@ class Knight() :
         
         self.piece_type = 'knight'
         self.colour = colour
+
+    def get_colour(self) :
+        return self.colour
         
     def get_available_moves(self, board, pos) :
         
@@ -89,18 +95,18 @@ class Knight() :
                 if new_file :
                     # moving up
                     if pos[1] + rank_change <= 8 :
-                        if board[new_file][pos[1]+rank_change] :
-                            if board[new_file][pos[1]+rank_change].get_colour != self.colour :
-                                moves.append((new_file, pos[1]+rank_change))
-                        else :
+                        if not board[new_file][pos[1]+rank_change] :
                             moves.append((new_file, pos[1]+rank_change))
+                        else :
+                            if board[new_file][pos[1]+rank_change].get_colour() != self.colour :
+                                moves.append((new_file, pos[1]+rank_change))
                     # moving down
                     if pos[1] - rank_change >= 1 :
-                        if board[new_file][pos[1]-rank_change] :
-                            if board[new_file][pos[1]-rank_change].get_colour != self.colour :
-                                moves.append((new_file, pos[1]-rank_change))
-                        else :
+                        if not board[new_file][pos[1]-rank_change] :
                             moves.append((new_file, pos[1]-rank_change))
+                        else :
+                            if board[new_file][pos[1]-rank_change].get_colour() != self.colour :
+                                moves.append((new_file, pos[1]-rank_change))
                             
         return moves
                 
