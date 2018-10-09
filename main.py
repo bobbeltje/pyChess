@@ -18,12 +18,22 @@ def start_game() :
     #def get_available_moves(self, board, pos, col) :
     p1 = cp.Pawn('white')
     p2 = cp.Pawn('black')
+    p3 = cp.Pawn('white')
+    p3.enpassant = 'f'
     
     moves = p1.get_available_moves(board, ('e', 2))
     print(moves)
-    moves = p2.get_available_moves(board, ('e', 7))
+    moves = p2.get_available_moves(board, ('h', 7))
     print(moves)
-    moves = p2.get_available_moves(board, ('f', 5))
+    moves = p3.get_available_moves(board, ('e', 5))
+    print(moves)
+    
+    p4 = cp.Knight('white')
+    moves = p4.get_available_moves(board, ('e', 4))
+    print(moves)
+    moves = p4.get_available_moves(board, ('g', 4))
+    print(moves)
+    moves = p4.get_available_moves(board, ('h', 7))
     print(moves)
 
 if __name__ == '__main__' :
