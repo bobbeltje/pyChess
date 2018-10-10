@@ -15,6 +15,10 @@ def start_game() :
     board.columns = FILES
     board.index = RANKS
     
+    board['d'].loc[6] = cp.Pawn('black')
+    board['d'].loc[2] = cp.Pawn('white')
+
+    # pawn trials
     '''
     p1 = cp.Pawn('white')
     p2 = cp.Pawn('black')
@@ -29,9 +33,9 @@ def start_game() :
     print(moves)
     '''
     
+    # knight trials
+    '''
     p4 = cp.Knight('white')
-    board['d'].loc[6] = cp.Pawn('black')
-    board['d'].loc[2] = cp.Pawn('white')
     print(board)
     print(board['d'].loc[6].get_colour())
     print(board['d'].loc[2].get_colour())
@@ -41,7 +45,12 @@ def start_game() :
     print(moves)
     moves = p4.get_available_moves(board, ('h', 7))
     print(moves)
-
+    '''
+    
+    p5 = cp.King('white')
+    print(p5.get_available_moves(board, ('e', 4)))
+    print(p5.get_available_moves(board, ('f', 4)))
+    
 if __name__ == '__main__' :
     
     start_game()

@@ -1,5 +1,6 @@
 
 from utils import *
+import math
 
 class Pawn() :
     
@@ -110,7 +111,86 @@ class Knight() :
                             
         return moves
                 
+class Bishop() :
+    
+    def __init__(self, colour) :
+        
+        self.piece_type = 'bishop'
+        self.colour = colour
+
+    def get_colour(self) :
+        return self.colour
+        
+    def get_available_moves(self, board, pos) :
+        
+        moves = []
+        
+        # check one file to the right
+        for direction in ('left', 'right') :
+            for step in (1, -1) :
+                piece_encountered = False
+                while True :
+                    new_file = get_file(pos[0], direction, abs(step))
+                    if new_file :
+                        if pos[1] + step <= 8  and pos[1] + step >= 1:
+                            if not board[new_file][pos[1]+step] :
+                                moves.append((new_file, pos[1]+step))
+                            else :
+                                piece_encountered = True
+                                if board[new_file][pos[1]+step].get_colour() != self.colour :
+                                    moves.append((new_file, pos[1]+step))
+                    if not new_file or piece_encountered :
+                        break
+                    step += int(math.copysign(1, step))
+        return moves
+
+class Rook() :
+    
+    def __init__(self, colour) :
+        
+        self.piece_type = 'rook'
+        self.colour = colour
+        
+    def get_colour(self) :
+        return self.colour
+        
+    def get_available_moves(self, board, pos) :
+        pass
+
                     
+class King() :
+    
+    def __init__(self, colour) :
+        
+        self.piece_type = 'king'
+        self.colour = colour
+
+    def get_colour(self) :
+        return self.colour
+        
+    def get_available_moves(self, board, pos) :
+        
+        moves = []
+        
+        # bishop-like movement
+        for direction in ('left', 'right') :
+            for step in (1, -1) :
+                new_file = get_file(pos[0], direction, abs(step))
+                if new_file :
+                    if pos[1] + step <= 8  and pos[1] + step >= 1:
+                        if not board[new_file][pos[1]+step] :
+                            moves.append((new_file, pos[1]+step))
+                        else :
+                            piece_encountered = True
+                            if board[new_file][pos[1]+step].get_colour() != self.colour :
+                                moves.append((new_file, pos[1]+step))
+        
+        # rook-like movement
+        
+        # check for castling
+        
+        return moves
+                     
             
                     
             
