@@ -3,6 +3,7 @@ from modules.utils import *
 # from utils import *
 import math
 
+
 class Pawn() :
     
     def __init__(self, colour) :
@@ -38,6 +39,7 @@ class Pawn() :
             # check if it can take two steps
             if not board[pos[0]][pos[1]+1] and not board[pos[0]][pos[1]+2] and pos[1]==2:
                 moves.append((pos[0], pos[1]+2))
+            # enpassant
             if self.enpassant :
                 moves.append((self.enpassant, 6))
                 self.enpassant = False
@@ -62,19 +64,13 @@ class Pawn() :
             # check if it can take two steps
             if not board[pos[0]][pos[1]-1] and not board[pos[0]][pos[1]-2] and pos[1]==7:
                 moves.append((pos[0], pos[1]-2))
+            # enpassant
             if self.enpassant :
                 moves.append((self.enpassant, 3))
                 self.enpassant = False
                 
             return moves
             
-class WhitePawn(Pawn) :
-    pass
-    
-class BlackPawn(Pawn) :
-    pass
-    
-
 class Knight() :
     
     def __init__(self, colour) :
@@ -151,12 +147,47 @@ class Rook() :
         
         self.piece_type = 'rook'
         self.colour = colour
+        self.moved = False
         
     def get_colour(self) :
         return self.colour
         
     def get_available_moves(self, board, pos) :
-        pass
+        
+        moves = []
+        
+        # checking left and right
+        for direction in ('left', 'right') :
+            piece_encountered = False
+            step = 1
+            while True :
+                new_file = get_file(pos[0], direction, step)
+                if new_file :
+                    if not board[new_file][pos[1]] :
+                        moves.append((new_file, pos[1]))
+                    else :
+                        piece_encountered = True
+                        if board[new_file][pos[1]].get_colour() != self.colour :
+                            moves.append((new_file, pos[1]))
+                if not new_file or piece_encountered :
+                    break
+                step += 1
+
+        # checking up and down
+        for step in (-1, 1) :
+            piece_encountered = False
+            while (pos[1] + step > 0) and (pos[1] + step < 9) :
+                if not board[pos[0]][pos[1]+step] :
+                    moves.append((pos[0], pos[1]+step))
+                else :
+                    piece_encountered = True
+                    if board[pos[0]][pos[1]+step].get_colour() != self.colour :
+                        moves.append((pos[0], pos[1]+step))
+                if piece_encountered :
+                    break
+                step += int(math.copysign(1, step))
+                
+        return moves
 
                     
 class King() :
@@ -165,6 +196,7 @@ class King() :
         
         self.piece_type = 'king'
         self.colour = colour
+        self.moved = False
 
     def get_colour(self) :
         return self.colour
@@ -187,12 +219,95 @@ class King() :
                                 moves.append((new_file, pos[1]+step))
         
         # rook-like movement
+        # checking left and right
+        for direction in ('left', 'right') :
+            new_file = get_file(pos[0], direction, 1)
+            if new_file :
+                if not board[new_file][pos[1]] :
+                    moves.append((new_file, pos[1]))
+                else :
+                    if board[new_file][pos[1]].get_colour() != self.colour :
+                        moves.append((new_file, pos[1]))
+
+        # checking up and down
+        for step in (-1, 1) :
+            if not board[pos[0]][pos[1]+step] :
+                moves.append((pos[0], pos[1]+step))
+            else :
+                if board[pos[0]][pos[1]+step].get_colour() != self.colour :
+                    moves.append((pos[0], pos[1]+1))
         
         # check for castling
         
         return moves
-                     
-            
-                    
-            
-                    
+
+class Queen() :
+    
+    def __init__(self, colour) :
+        
+        self.piece_type = 'queen'
+        self.colour = colour
+
+    def get_colour(self) :
+        return self.colour
+        
+    def get_available_moves(self, board, pos) :
+        
+        moves = []
+        
+        # bishop-like movement
+        # check one file to the right
+        for direction in ('left', 'right') :
+            for step in (1, -1) :
+                piece_encountered = False
+                while True :
+                    new_file = get_file(pos[0], direction, abs(step))
+                    if new_file :
+                        if pos[1] + step <= 8  and pos[1] + step >= 1:
+                            if not board[new_file][pos[1]+step] :
+                                moves.append((new_file, pos[1]+step))
+                            else :
+                                piece_encountered = True
+                                if board[new_file][pos[1]+step].get_colour() != self.colour :
+                                    moves.append((new_file, pos[1]+step))
+                    if not new_file or piece_encountered :
+                        break
+                    step += int(math.copysign(1, step))
+        
+        # rook-like movement
+        # checking left and right
+        for direction in ('left', 'right') :
+            piece_encountered = False
+            step = 1
+            while True :
+                new_file = get_file(pos[0], direction, step)
+                if new_file :
+                    if not board[new_file][pos[1]] :
+                        moves.append((new_file, pos[1]))
+                    else :
+                        piece_encountered = True
+                        if board[new_file][pos[1]].get_colour() != self.colour :
+                            moves.append((new_file, pos[1]))
+                if not new_file or piece_encountered :
+                    break
+                step += 1
+
+        # checking up and down
+        for step in (-1, 1) :
+            piece_encountered = False
+            while (pos[1] + step > 0) and (pos[1] + step < 9) :
+                if not board[pos[0]][pos[1]+step] :
+                    moves.append((pos[0], pos[1]+step))
+                else :
+                    piece_encountered = True
+                    if board[pos[0]][pos[1]+step].get_colour() != self.colour :
+                        moves.append((pos[0], pos[1]+step))
+                if piece_encountered :
+                    break
+                step += int(math.copysign(1, step))
+        
+        return moves
+
+
+
+

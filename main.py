@@ -3,9 +3,11 @@ import pandas as pd
 import modules.pieces as cp
 from modules.utils import *
 
+# Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
-        
+
+# Note consider using two dictionaries to hold the positions        
 
 def start_game() :
     
@@ -15,8 +17,9 @@ def start_game() :
     board.columns = FILES
     board.index = RANKS
     
-    board['d'].loc[6] = cp.Pawn('black')
-    board['d'].loc[2] = cp.Pawn('white')
+    for i in range(8) :
+        board[FILES[i]].loc[7] = cp.Pawn('black')
+        board[FILES[i]].loc[2] = cp.Pawn('white')
 
     # pawn trials
     '''
@@ -47,9 +50,27 @@ def start_game() :
     print(moves)
     '''
     
+    '''
     p5 = cp.King('white')
     print(p5.get_available_moves(board, ('e', 4)))
     print(p5.get_available_moves(board, ('f', 4)))
+    '''
+    
+    '''
+    p6 = cp.Bishop('white')
+    print(p6.get_available_moves(board, ('e', 4)))
+    
+    p7 = cp.Rook('white')
+    print(p7.get_available_moves(board, ('a', 1)))
+    print(p7.get_available_moves(board, ('a', 2)))
+    print(p7.get_available_moves(board, ('e', 4)))
+    '''
+    
+    p8 = cp.Queen('white')
+    print(p8.get_available_moves(board, ('a', 1)))
+    print(p8.get_available_moves(board, ('a', 2)))
+    print(p8.get_available_moves(board, ('e', 4)))
+    print(p8.get_available_moves(board, ('b', 8)))
     
 if __name__ == '__main__' :
     
