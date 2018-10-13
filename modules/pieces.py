@@ -1,5 +1,5 @@
 
-from modules.utils import *
+import modules.utils as utils
 # from utils import *
 import math
 
@@ -18,8 +18,8 @@ class Pawn() :
     def get_available_moves(self, board, pos) :
         
         moves = []
-        right_file = get_file(pos[0], 'right', 1)
-        left_file = get_file(pos[0], 'left', 1)
+        right_file = utils.get_file(pos[0], 'right', 1)
+        left_file = utils.get_file(pos[0], 'left', 1)
         
         if self.colour == 'white' :
             
@@ -89,7 +89,7 @@ class Knight() :
         for direction in ('left', 'right') :
             for side_step in (1, 2) :
                 rank_change = 3 - side_step
-                new_file = get_file(pos[0], direction, side_step)
+                new_file = utils.get_file(pos[0], direction, side_step)
                 if new_file :
                     # moving up
                     if pos[1] + rank_change <= 8 :
@@ -127,7 +127,7 @@ class Bishop() :
             for step in (1, -1) :
                 piece_encountered = False
                 while True :
-                    new_file = get_file(pos[0], direction, abs(step))
+                    new_file = utils.get_file(pos[0], direction, abs(step))
                     if new_file :
                         if pos[1] + step <= 8  and pos[1] + step >= 1:
                             if not board[new_file][pos[1]+step] :
@@ -161,7 +161,7 @@ class Rook() :
             piece_encountered = False
             step = 1
             while True :
-                new_file = get_file(pos[0], direction, step)
+                new_file = utils.get_file(pos[0], direction, step)
                 if new_file :
                     if not board[new_file][pos[1]] :
                         moves.append((new_file, pos[1]))
@@ -208,7 +208,7 @@ class King() :
         # bishop-like movement
         for direction in ('left', 'right') :
             for step in (1, -1) :
-                new_file = get_file(pos[0], direction, abs(step))
+                new_file = utils.get_file(pos[0], direction, abs(step))
                 if new_file :
                     if pos[1] + step <= 8  and pos[1] + step >= 1:
                         if not board[new_file][pos[1]+step] :
@@ -221,7 +221,7 @@ class King() :
         # rook-like movement
         # checking left and right
         for direction in ('left', 'right') :
-            new_file = get_file(pos[0], direction, 1)
+            new_file = utils.get_file(pos[0], direction, 1)
             if new_file :
                 if not board[new_file][pos[1]] :
                     moves.append((new_file, pos[1]))
@@ -261,7 +261,7 @@ class Queen() :
             for step in (1, -1) :
                 piece_encountered = False
                 while True :
-                    new_file = get_file(pos[0], direction, abs(step))
+                    new_file = utils.get_file(pos[0], direction, abs(step))
                     if new_file :
                         if pos[1] + step <= 8  and pos[1] + step >= 1:
                             if not board[new_file][pos[1]+step] :
@@ -280,7 +280,7 @@ class Queen() :
             piece_encountered = False
             step = 1
             while True :
-                new_file = get_file(pos[0], direction, step)
+                new_file = utils.get_file(pos[0], direction, step)
                 if new_file :
                     if not board[new_file][pos[1]] :
                         moves.append((new_file, pos[1]))

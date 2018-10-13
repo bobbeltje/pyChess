@@ -1,7 +1,8 @@
 
 import pandas as pd
 import modules.pieces as cp
-from modules.utils import *
+import modules.utils as utils
+# from modules.utils import *
 
 # Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -13,16 +14,20 @@ def start_game() :
     
     global FILES, RANKS
     
-    board = pd.DataFrame([[0]*8]*8)
-    board.columns = FILES
-    board.index = RANKS
+    board = utils.new_board()
     
-    for i in range(8) :
-        board[FILES[i]].loc[7] = cp.Pawn('black')
-        board[FILES[i]].loc[2] = cp.Pawn('white')
+    print(board)
+    # board = pd.DataFrame([[0]*8]*8)
+    # board.columns = FILES
+    # board.index = RANKS
+    
+    # for i in range(8) :
+    #     board[FILES[i]].loc[7] = cp.Pawn('black')
+    #     board[FILES[i]].loc[2] = cp.Pawn('white')
 
     # pawn trials
     '''
+    print('pawn trials')
     p1 = cp.Pawn('white')
     p2 = cp.Pawn('black')
     p3 = cp.Pawn('white')
@@ -38,10 +43,8 @@ def start_game() :
     
     # knight trials
     '''
+    print('knight trials')
     p4 = cp.Knight('white')
-    print(board)
-    print(board['d'].loc[6].get_colour())
-    print(board['d'].loc[2].get_colour())
     moves = p4.get_available_moves(board, ('e', 4))
     print(moves)
     moves = p4.get_available_moves(board, ('g', 4))
@@ -51,12 +54,14 @@ def start_game() :
     '''
     
     '''
+    print('king trials')
     p5 = cp.King('white')
     print(p5.get_available_moves(board, ('e', 4)))
     print(p5.get_available_moves(board, ('f', 4)))
     '''
     
     '''
+    print('bishop trials')
     p6 = cp.Bishop('white')
     print(p6.get_available_moves(board, ('e', 4)))
     
@@ -66,11 +71,14 @@ def start_game() :
     print(p7.get_available_moves(board, ('e', 4)))
     '''
     
+    '''
+    print('queen trials')
     p8 = cp.Queen('white')
     print(p8.get_available_moves(board, ('a', 1)))
     print(p8.get_available_moves(board, ('a', 2)))
     print(p8.get_available_moves(board, ('e', 4)))
     print(p8.get_available_moves(board, ('b', 8)))
+    '''
     
 if __name__ == '__main__' :
     
