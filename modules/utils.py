@@ -1,6 +1,6 @@
 
 import pandas as pd
-import pieces as cp
+from . import pieces as cp
 
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
@@ -32,24 +32,24 @@ def new_board() :
 
     # add pawns
     for i in range(8) :
-        board[FILES[i]].loc[7] = cp.Pawn('black')
-        board[FILES[i]].loc[2] = cp.Pawn('white')
+        board.loc[7, FILES[i]] = cp.Pawn('black')
+        board.loc[2, FILES[i]] = cp.Pawn('white')
 
-    board['a'].loc[1] = cp.Rook('white')
-    board['b'].loc[1] = cp.Knight('white')
-    board['c'].loc[1] = cp.Bishop('white')
-    board['d'].loc[1] = cp.Queen('white')
-    board['e'].loc[1] = cp.King('white')
-    board['f'].loc[1] = cp.Bishop('white')
-    board['g'].loc[1] = cp.Knight('white')
-    board['h'].loc[1] = cp.Rook('white')
-    board['a'].loc[8] = cp.Rook('black')
-    board['b'].loc[8] = cp.Knight('black')
-    board['c'].loc[8] = cp.Bishop('black')
-    board['d'].loc[8] = cp.Queen('black')
-    board['e'].loc[8] = cp.King('black')
-    board['f'].loc[8] = cp.Bishop('black')
-    board['g'].loc[8] = cp.Knight('black')
-    board['h'].loc[8] = cp.Rook('black')
+    board.loc[1, 'a'] = cp.Rook('white')
+    board.loc[1, 'b'] = cp.Knight('white')
+    board.loc[1, 'c'] = cp.Bishop('white')
+    board.loc[1, 'd'] = cp.Queen('white')
+    board.loc[1, 'e'] = cp.King('white')
+    board.loc[1, 'f'] = cp.Bishop('white')
+    board.loc[1, 'g'] = cp.Knight('white')
+    board.loc[1, 'h'] = cp.Rook('white')
+    board.loc[8, 'a'] = cp.Rook('black')
+    board.loc[8, 'b'] = cp.Knight('black')
+    board.loc[8, 'c'] = cp.Bishop('black')
+    board.loc[8, 'd'] = cp.Queen('black')
+    board.loc[8, 'e'] = cp.King('black')
+    board.loc[8, 'f'] = cp.Bishop('black')
+    board.loc[8, 'g'] = cp.Knight('black')
+    board.loc[8, 'h'] = cp.Rook('black')
 
     return board

@@ -1,6 +1,6 @@
 
-import pandas as pd
-import modules.pieces as cp
+#import pandas as pd
+#import modules.pieces as cp
 import modules.utils as utils
 # from modules.utils import *
 
@@ -16,7 +16,11 @@ def start_game() :
     
     board = utils.new_board()
     
-    print(board)
+    # print(board)
+	
+    for rank in range(1, 9) :
+        print(board.loc[rank])
+	
     # board = pd.DataFrame([[0]*8]*8)
     # board.columns = FILES
     # board.index = RANKS
