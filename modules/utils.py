@@ -1,6 +1,11 @@
 
 import pandas as pd
+
+# python2 import
 import pieces as cp
+
+# python3 import
+# from . import pieces as cp
 
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
@@ -56,6 +61,7 @@ def new_board() :
     board['f'].loc[8] = cp.Bishop('black', name='bishop1')
     board['g'].loc[8] = cp.Knight('black', name='knight1')
     board['h'].loc[8] = cp.Rook('black', name='rook1')
+
 
     white.update({'rook0':'a1', 'knight0':'b1', 'bishop0':'c1', 'queen':'d1',
              'king':'e1', 'bishop1':'f1', 'knigh1':'g1', 'rook1':'h1'})

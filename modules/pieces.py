@@ -1,7 +1,11 @@
 
-import modules.utils as utils
-# from utils import *
 import math
+
+# python2 import
+import utils
+
+# python3 import
+# from . import utils
 
 
 class Pawn() :

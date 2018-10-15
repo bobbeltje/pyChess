@@ -1,8 +1,9 @@
 
-import pandas as pd
-import modules.pieces as cp
+# python2 import
+
+# python3 import 
 import modules.utils as utils
-# from modules.utils import *
+
 
 # Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -21,13 +22,6 @@ def start_game() :
     print(white)
     print(black)
     #'''
-    
-    '''
-    print(board.index)
-    print(type(board.index[1]))
-    print(type(board.columns[1]))
-    #'''
-    
     
     moves = []
     for piece, pos in white.items() :
