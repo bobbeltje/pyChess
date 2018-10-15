@@ -6,11 +6,12 @@ import math
 
 class Pawn() :
     
-    def __init__(self, colour) :
+    def __init__(self, colour, name='pawn') :
         
         self.piece_type = 'pawn'
         self.colour = colour
         self.enpassant = False
+        self.name = name
 
     def get_colour(self) :
         return self.colour
@@ -73,10 +74,11 @@ class Pawn() :
             
 class Knight() :
     
-    def __init__(self, colour) :
+    def __init__(self, colour, name='knight') :
         
         self.piece_type = 'knight'
         self.colour = colour
+        self.name = name
 
     def get_colour(self) :
         return self.colour
@@ -110,10 +112,11 @@ class Knight() :
                 
 class Bishop() :
     
-    def __init__(self, colour) :
+    def __init__(self, colour, name='bishop') :
         
         self.piece_type = 'bishop'
         self.colour = colour
+        self.name = name
 
     def get_colour(self) :
         return self.colour
@@ -143,11 +146,12 @@ class Bishop() :
 
 class Rook() :
     
-    def __init__(self, colour) :
+    def __init__(self, colour, name='rook') :
         
         self.piece_type = 'rook'
         self.colour = colour
         self.moved = False
+        self.name = name
         
     def get_colour(self) :
         return self.colour
@@ -189,14 +193,14 @@ class Rook() :
                 
         return moves
 
-                    
 class King() :
     
-    def __init__(self, colour) :
+    def __init__(self, colour, name='king') :
         
         self.piece_type = 'king'
         self.colour = colour
         self.moved = False
+        self.name = name
 
     def get_colour(self) :
         return self.colour
@@ -231,11 +235,12 @@ class King() :
 
         # checking up and down
         for step in (-1, 1) :
-            if not board[pos[0]][pos[1]+step] :
-                moves.append((pos[0], pos[1]+step))
-            else :
-                if board[pos[0]][pos[1]+step].get_colour() != self.colour :
-                    moves.append((pos[0], pos[1]+1))
+            if pos[1] + step <= 8  and pos[1] + step >= 1:
+                if not board[pos[0]][pos[1]+step] :
+                    moves.append((pos[0], pos[1]+step))
+                else :
+                    if board[pos[0]][pos[1]+step].get_colour() != self.colour :
+                        moves.append((pos[0], pos[1]+1))
         
         # check for castling
         
@@ -243,10 +248,11 @@ class King() :
 
 class Queen() :
     
-    def __init__(self, colour) :
+    def __init__(self, colour, name='queen') :
         
         self.piece_type = 'queen'
         self.colour = colour
+        self.name = name
 
     def get_colour(self) :
         return self.colour
