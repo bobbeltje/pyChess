@@ -1,11 +1,6 @@
 
 import math
-
-# python2 import
-import utils
-
-# python3 import
-# from . import utils
+from . import utils
 
 
 class Pawn() :

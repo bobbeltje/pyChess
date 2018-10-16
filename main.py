@@ -1,8 +1,5 @@
 
-# python2 import
-
-# python3 import 
-import modules.utils as utils
+import modules.board as boards
 
 
 # Note that the indeces of FILES & RANKS go from 0 to 7
@@ -15,7 +12,7 @@ def start_game() :
     
     global FILES, RANKS
     
-    board, white, black = utils.new_board()
+    board, white, black = boards.new_board()
     
     '''
     print(board)
