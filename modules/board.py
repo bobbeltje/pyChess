@@ -1,5 +1,6 @@
 
 import pandas as pd
+import random
 from . import utils
 from . import pieces as cp
 
@@ -49,3 +50,24 @@ def new_board() :
              'king':'e8', 'bishop1':'f8', 'knigh1':'g8', 'rook1':'h8'})
     
     return board, white, black
+
+def make_move(board, dic, col) :
+
+    moves = []
+    for piece, pos in dic.items() :
+        # print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, pos[0], pos[1]))
+        movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
+        if movelist :
+            moves.append((pos, movelist))
+        
+    piece = random.choice(moves)
+    move = random.choice(piece[1])
+    piece = piece[0]
+
+    print('{3} moves {0} to {1}{2}'.format(piece, move[0], move[1], col))    
+    board.loc[move[1], move[0]] = board.loc[int(piece[1]), piece[0]]
+    board.loc[int(piece[1]), piece[0]] = 0
+    dic[board.loc[int(move[1]), move[0]].name] = move[0]+str(move[1])
+    return dic
+    
+    

@@ -1,7 +1,6 @@
 
 import modules.board as boards
 
-
 # Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
@@ -19,14 +18,22 @@ def start_game() :
     print(white)
     print(black)
     #'''
+    pieceList = [white, black]
+    colourList = ['white', 'black']
     
-    moves = []
-    for piece, pos in white.items() :
-        # print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, pos[0], pos[1]))
-        movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
-        moves.append((pos, movelist))
+    while True :
         
-    print(moves)
+        for i in (0, 1) :
+        
+            pieceList[i] = boards.make_move(board, pieceList[i], colourList[i])
+    
+    # boards.make_move(board, white)
+    # print(board)
+    # print(pieceList[0])
+    # print(pieceList[1])
+    
+#    for file_ in board.columns :
+#        print(board[file_])
     
 if __name__ == '__main__' :
     
