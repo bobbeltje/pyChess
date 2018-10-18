@@ -13,7 +13,8 @@ def start_game() :
     global FILES, RANKS
     
     board, white, black = boards.new_board()
-    
+    #for i in range(1, 9) :
+    #    print(board.loc[i])
     '''
     print(board)
     print(white)

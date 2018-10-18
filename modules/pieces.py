@@ -37,8 +37,9 @@ class Pawn() :
             if not board[pos[0]][pos[1]+1] :
                 moves.append((pos[0], pos[1]+1))
             # check if it can take two steps
-            if not board[pos[0]][pos[1]+1] and not board[pos[0]][pos[1]+2] and pos[1]==2:
-                moves.append((pos[0], pos[1]+2))
+            if pos[1]==2:
+                if not board[pos[0]][pos[1]+1] and not board[pos[0]][pos[1]+2]: 
+                    moves.append((pos[0], pos[1]+2))
             # enpassant
             if self.enpassant :
                 moves.append((self.enpassant, 6))
@@ -62,8 +63,9 @@ class Pawn() :
             if not board[pos[0]][pos[1]-1] :
                 moves.append((pos[0], pos[1]-1))
             # check if it can take two steps
-            if not board[pos[0]][pos[1]-1] and not board[pos[0]][pos[1]-2] and pos[1]==7:
-                moves.append((pos[0], pos[1]-2))
+            if pos[1]==7: 
+                if not board[pos[0]][pos[1]-1] and not board[pos[0]][pos[1]-2] :
+                    moves.append((pos[0], pos[1]-2))
             # enpassant
             if self.enpassant :
                 moves.append((self.enpassant, 3))
