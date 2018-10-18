@@ -45,18 +45,21 @@ def new_board() :
 
 
     white.update({'rook0':'a1', 'knight0':'b1', 'bishop0':'c1', 'queen':'d1',
-             'king':'e1', 'bishop1':'f1', 'knigh1':'g1', 'rook1':'h1'})
+             'king':'e1', 'bishop1':'f1', 'knight1':'g1', 'rook1':'h1'})
     black.update({'rook0':'a8', 'knight0':'b8', 'bishop0':'c8', 'queen':'d8',
-             'king':'e8', 'bishop1':'f8', 'knigh1':'g8', 'rook1':'h8'})
+             'king':'e8', 'bishop1':'f8', 'knight1':'g8', 'rook1':'h8'})
     
     return board, white, black
 
-def make_move(board, dic, col) :
+def make_move(board, dic, dic_opponent, col) :
 
     moves = []
     for piece, pos in dic.items() :
-        # print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, pos[0], pos[1]))
-        movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
+        try :
+            movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
+        except :
+            print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, pos[0], pos[1]))
+        
         if movelist :
             moves.append((pos, movelist))
         
@@ -64,10 +67,20 @@ def make_move(board, dic, col) :
     move = random.choice(piece[1])
     piece = piece[0]
 
-    print('{3} moves {0} to {1}{2}'.format(piece, move[0], move[1], col))    
+    print('{3} moves {0} to {1}{2}'.format(piece, move[0], move[1], col))
+    
+    # in case piece is taken
+    if board.loc[move[1], move[0]] :
+        print('taking {0}'.format(board.loc[move[1], move[0]].name))
+        del dic_opponent[board.loc[move[1], move[0]].name]
+        
+    # move piece
     board.loc[move[1], move[0]] = board.loc[int(piece[1]), piece[0]]
+    # set old location to 0
     board.loc[int(piece[1]), piece[0]] = 0
+    # update dictionary
     dic[board.loc[int(move[1]), move[0]].name] = move[0]+str(move[1])
-    return dic
+    
+    return dic, dic_opponent
     
     

@@ -1,10 +1,11 @@
 
 import modules.board as boards
+import random
 
 # Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
-
+random.seed(5)
 # Note consider using two dictionaries to hold the positions        
 
 def start_game() :
@@ -25,7 +26,7 @@ def start_game() :
         
         for i in (0, 1) :
         
-            pieceList[i] = boards.make_move(board, pieceList[i], colourList[i])
+            pieceList[i], pieceList[1-i] = boards.make_move(board, pieceList[i], pieceList[1-i], colourList[i])
     
     # boards.make_move(board, white)
     # print(board)
