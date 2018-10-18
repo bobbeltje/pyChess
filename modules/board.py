@@ -59,7 +59,7 @@ def make_move(board, dic, dic_opponent, col) :
             movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
         except :
             print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, pos[0], pos[1]))
-            'a' + 4
+            'a' + 5
         
         if movelist :
             moves.append((pos, movelist))
