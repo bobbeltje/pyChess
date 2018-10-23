@@ -11,6 +11,7 @@ class Pawn() :
         self.colour = colour
         self.enpassant = False
         self.name = name
+        self.value = 1.
 
     def get_colour(self) :
         return self.colour
@@ -80,6 +81,7 @@ class Knight() :
         self.piece_type = 'knight'
         self.colour = colour
         self.name = name
+        self.value = 2.5
 
     def get_colour(self) :
         return self.colour
@@ -118,6 +120,7 @@ class Bishop() :
         self.piece_type = 'bishop'
         self.colour = colour
         self.name = name
+        self.value = 3.
 
     def get_colour(self) :
         return self.colour
@@ -153,6 +156,7 @@ class Rook() :
         self.colour = colour
         self.moved = False
         self.name = name
+        self.value = 5.
         
     def get_colour(self) :
         return self.colour
@@ -202,6 +206,7 @@ class King() :
         self.colour = colour
         self.moved = False
         self.name = name
+        self.value = 1000.
 
     def get_colour(self) :
         return self.colour
@@ -254,6 +259,7 @@ class Queen() :
         self.piece_type = 'queen'
         self.colour = colour
         self.name = name
+        self.value = 10.
 
     def get_colour(self) :
         return self.colour
