@@ -51,7 +51,7 @@ def new_board() :
     
     return board, white, black
 
-def make_move(board, dic, dic_opponent, col) :
+def get_all_moves(board, dic) :
     
     moves = []
     for piece, pos in dic.items() :
@@ -69,7 +69,12 @@ def make_move(board, dic, dic_opponent, col) :
                     values[idx] = board.loc[file, rank].value
                     
             moves.append((pos, movelist, values))
-        
+            
+    return moves
+
+def make_move(board, dic, dic_opponent, col) :
+    
+    moves = get_all_moves(board, dic)
 #    strategy 01 : random choice
 #    piece = random.choice(moves)
 #    move = random.choice(piece[1])
