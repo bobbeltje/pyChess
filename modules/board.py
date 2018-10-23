@@ -52,15 +52,29 @@ def new_board() :
     return board, white, black
 
 def get_all_moves(board, dic) :
+    '''
+    Find all possible moves for the pieces in dic.
+    
+    Returns a list of tuples
+    tuple[0] is the position of a piece
+    tuple[1] is the available moves for that piece
+    tuple[2] is the value of pieces it can capture
+    '''
     
     moves = []
+    # per piece find the available moves and put in movelist
     for piece, pos in dic.items() :
         try :
-            movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
+            movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(
+                            board, (pos[0], int(pos[1]))
+                            )
         except :
-            print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, pos[0], pos[1]))
+            print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, 
+                                                             pos[0], 
+                                                             pos[1]))
             'a' + 5
         
+        # if moves are available, find the value of those moves and then append
         if movelist :
             values = [0] * len(movelist)
             for idx in range(len(movelist)) :
