@@ -6,7 +6,9 @@ import random
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
 random.seed(5)
-# Note consider using two dictionaries to hold the positions        
+# Note consider using two dictionaries to hold the positions
+
+# strat3 other.value - own.value        
 
 def start_game() :
     
