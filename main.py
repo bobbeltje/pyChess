@@ -23,11 +23,16 @@ def start_game() :
     pieceList = [white, black]
     colourList = ['white', 'black']
     
+    move = 1
     while True :
         
+        print('Move {0}'.format(move))
         for i in (0, 1) :
-        
+            
             pieceList[i], pieceList[1-i] = boards.make_move(board, pieceList[i], pieceList[1-i], colourList[i])
+            
+        move += 1
+        input('[enter]')
     
     # boards.make_move(board, white)
     # print(board)
