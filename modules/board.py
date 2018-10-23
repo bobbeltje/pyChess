@@ -62,10 +62,28 @@ def make_move(board, dic, dic_opponent, col) :
             'a' + 5
         
         if movelist :
-            moves.append((pos, movelist))
+            values = [0] * len(movelist)
+            for idx in range(len(movelist)) :
+                rank, file = movelist[idx]
+                if board.loc[file, rank] :
+                    values[idx] = board.loc[file, rank].value
+                    
+            moves.append((pos, movelist, values))
         
-    piece = random.choice(moves)
-    move = random.choice(piece[1])
+#    strategy 01 : random choice
+#    piece = random.choice(moves)
+#    move = random.choice(piece[1])
+
+#    strategy 02 : first best move
+#    find the highest values each piece can score and the max of those
+    highest_values = [max(k) for i,j,k in moves]
+    max_value = max(highest_values) - 0.01
+#    select one of the pieces that can gain max_value
+    piece = random.choice([move for i,move in enumerate(moves) if max(moves[i][2]) >= max_value])
+#    select one of its moves that gain max_value
+    move = random.choice([idx for idx,val in enumerate(piece[2]) if val >= max_value])
+    move = piece[1][move]
+    
     piece = piece[0]
     
     # NOTE 

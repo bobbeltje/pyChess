@@ -32,7 +32,7 @@ def start_game() :
             pieceList[i], pieceList[1-i] = boards.make_move(board, pieceList[i], pieceList[1-i], colourList[i])
             
         move += 1
-        input('[enter]')
+#        input('[enter]')
     
     # boards.make_move(board, white)
     # print(board)
