@@ -1,5 +1,5 @@
 
-import pandas as pd
+#import pandas as pd
 
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]

@@ -1,3 +1,5 @@
 nohup.out
 modules/*.pyc
-modules/__pycache__/*
+modules/__pycache__/*.spyproject/*
+.spyproject/
+modules/__pycache__/

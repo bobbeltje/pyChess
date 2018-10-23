@@ -1,7 +1,7 @@
 
 import pandas as pd
 import random
-from . import utils
+#from . import utils
 from . import pieces as cp
 
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
