@@ -1,3 +1,17 @@
+def f2(n) :
+    if n == 0 :
+        return ['a', 'b']
+    l2 = []
+    moves = ['a', 'b']
+    for move in moves :
+        x = f2(n-1)
+        for i in x :
+            l2.append(move+i)
+    return l2
+f2(0)
+f2(1)
+f2(2)
+f2(3)
 # pawn trials
 '''
 print('pawn trials')

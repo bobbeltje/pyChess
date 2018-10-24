@@ -86,6 +86,11 @@ def get_all_moves(board, dic) :
             
     return moves
 
+def next_move(board, dic, dic_opponent) :
+    '''
+    Calculate the next set of best moves
+    '''
+
 def make_move(board, dic, dic_opponent, col) :
     
     moves = get_all_moves(board, dic)
