@@ -69,13 +69,17 @@ def get_all_moves(board, dic) :
                             board, (pos[0], int(pos[1]))
                             )
         except :
+            for i in range(3, 8) :
+                print(board.loc[i])
             print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, 
                                                              pos[0], 
                                                              pos[1]))
+            print(dic)
             'a' + 5
         
         # if moves are available, find the value of those moves and then append
         if movelist :
+#            values = np.random.normal(len(movelist), scale=0.05)
             values = [0] * len(movelist)
             for idx in range(len(movelist)) :
                 rank, file = movelist[idx]
@@ -86,10 +90,61 @@ def get_all_moves(board, dic) :
             
     return moves
 
-def next_move(board, dic, dic_opponent) :
+def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
     Calculate the next set of best moves
     '''
+    available_moves = get_all_moves(board, dic)
+    good_moves = {}
+    
+    # extract the highest valued moves
+    # result {'e2e4':0}
+    for piece_idx in range(len(available_moves)) :
+        for move_idx in range(len(available_moves[piece_idx][1])) :
+            if available_moves[piece_idx][2][move_idx] > 0.01 :
+                good_moves[
+                        '{0}{1}{2}'.format(
+                        available_moves[piece_idx][0],
+                        available_moves[piece_idx][1][move_idx][0],
+                        available_moves[piece_idx][1][move_idx][1])
+                        ] = available_moves[piece_idx][2][move_idx] * multiplier
+       
+    if depth == 0 :
+        return good_moves
+         
+    deep_moves = []
+    return_moves = {}
+    for move in good_moves.keys() :
+        new_board = board.copy()
+        new_dic = dic.copy()
+        new_opp = dic_opponent.copy()
+        
+        old_pos = (int(move[1]), move[0])
+        new_pos = (int(move[3]), move[2])
+        
+        # in case piece is taken
+        if new_board.at[new_pos] :
+            del new_opp[new_board.at[new_pos].name]
+
+        # move the piece
+        new_board.at[new_pos] = new_board.at[old_pos]
+        new_board.at[old_pos] = 0
+        
+        # in case of promotion
+        if (new_board.at[new_pos].name[:4] == 'pawn' 
+          and new_pos[1] in (1,8) 
+          and new_board.at[new_pos].piece_type == 'pawn') :
+          
+            new_board.at[new_pos] = cp.Queen(new_board.at[new_pos].colour, 
+                                             name=new_board.at[new_pos].name)
+            
+        deep_moves = search_move(new_board, new_opp, new_dic, depth-1, multiplier*-1)
+        for new_move,val in deep_moves.items() :
+            return_moves[move + new_move] = good_moves[move] + val
+            
+    return return_moves
+        
+#x = search_move(board, white, black, 1, 1)
 
 def make_move(board, dic, dic_opponent, col) :
     
