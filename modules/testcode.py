@@ -1,3 +1,35 @@
+import pandas as pd
+
+def tmp_board() :
+
+    global FILES, RANKS
+    
+    board = pd.DataFrame([[0]*8]*8)
+    board.columns = FILES
+    board.index = RANKS
+
+    white = dict()
+    black = dict()
+    
+    board.at[5, 'a'] = cp.Rook('white', name='rook0')
+    board.at[3, 'b'] = cp.Bishop('white', name='bishop0')
+    board.at[3, 'c'] = cp.Knight('white', name='knight0')
+    board.at[4, 'e'] = cp.Pawn('white', name='pawn0')
+    board.at[7, 'c'] = cp.Rook('black', name='knight0')
+    board.at[7, 'd'] = cp.Queen('black', name='queen0')
+    board.at[5, 'd'] = cp.Pawn('black', name='pawn0')
+    board.at[6, 'e'] = cp.Pawn('black', name='pawn1')
+    board.at[5, 'h'] = cp.Rook('black', name='rook0')
+
+    white.update({'rook0' : 'a5', 'bishop0' : 'b3', 'knight0' : 'c3',
+                  'pawn0' : 'e4'})
+    black.update({'knight0':'c7', 'queen0':'d7', 'pawn0' : 'd5', 
+                  'pawn1' : 'e6', 'rook0' : 'h5'})
+    
+    return board, white, black
+
+board, white, black = tmp_board()
+
 def f2(n) :
     if n == 0 :
         return ['a', 'b']
