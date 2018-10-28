@@ -2,6 +2,9 @@
 import modules.board as boards
 import random
 
+#import modules.pieces as cp
+#import modules.utils as utils
+
 # Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
@@ -45,5 +48,5 @@ def start_game() :
 #        print(board[file_])
     
 if __name__ == '__main__' :
-    
+
     start_game()
