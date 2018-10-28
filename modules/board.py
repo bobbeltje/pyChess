@@ -129,6 +129,8 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         # move the piece
         new_board.at[new_pos] = new_board.at[old_pos]
         new_board.at[old_pos] = 0
+        # update the dictionary
+        new_dic[new_board.loc[new_pos].name] = new_pos[1] + str(new_pos[0])
         
         # in case of promotion
         if (new_board.at[new_pos].name[:4] == 'pawn' 
@@ -138,13 +140,16 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
             new_board.at[new_pos] = cp.Queen(new_board.at[new_pos].colour, 
                                              name=new_board.at[new_pos].name)
             
+        # call recursively
         deep_moves = search_move(new_board, new_opp, new_dic, depth-1, multiplier*-1)
+        
+        # return chain of moves with value
         for new_move,val in deep_moves.items() :
             return_moves[move + new_move] = good_moves[move] + val
             
     return return_moves
         
-#x = search_move(board, white, black, 1, 1)
+#x = search_move(board, black, white, 4, 1)
 
 def make_move(board, dic, dic_opponent, col) :
     
