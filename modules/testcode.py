@@ -15,7 +15,7 @@ def tmp_board() :
     board.at[3, 'b'] = cp.Bishop('white', name='bishop0')
     board.at[3, 'c'] = cp.Knight('white', name='knight0')
     board.at[4, 'e'] = cp.Pawn('white', name='pawn0')
-    board.at[7, 'c'] = cp.Rook('black', name='knight0')
+    board.at[7, 'c'] = cp.Knight('black', name='knight0')
     board.at[7, 'd'] = cp.Queen('black', name='queen0')
     board.at[5, 'd'] = cp.Pawn('black', name='pawn0')
     board.at[6, 'e'] = cp.Pawn('black', name='pawn1')
@@ -29,7 +29,9 @@ def tmp_board() :
     return board, white, black
 
 board, white, black = tmp_board()
-
+for i in range(3, 8) :
+                print(board.loc[i])
+            
 def f2(n) :
     if n == 0 :
         return ['a', 'b']
