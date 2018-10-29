@@ -2,8 +2,11 @@
 import modules.board as boards
 import random
 
-#import modules.pieces as cp
-#import modules.utils as utils
+import modules.utils as utils
+import modules.pieces as cp
+from modules.board import *
+from modules.testcode import tmp_board
+
 
 # Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']

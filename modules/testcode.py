@@ -28,10 +28,7 @@ def tmp_board() :
     
     return board, white, black
 
-board, white, black = tmp_board()
-for i in range(3, 8) :
-                print(board.loc[i])
-            
+'''            
 def f2(n) :
     if n == 0 :
         return ['a', 'b']
@@ -46,6 +43,9 @@ f2(0)
 f2(1)
 f2(2)
 f2(3)
+'''
+
+
 # pawn trials
 '''
 print('pawn trials')
