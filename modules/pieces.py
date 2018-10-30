@@ -2,6 +2,18 @@
 import math
 from . import utils
 
+class FakePiece() :
+    
+    def __init__(self, colour) :
+        
+        self.value = -100.
+        self.colour = colour
+    
+    def get_available_moves(self) :
+        return []
+    
+    def get_colour(self) :
+        return self.colour
 
 class Pawn() :
     

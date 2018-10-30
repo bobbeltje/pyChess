@@ -4,6 +4,33 @@ def tmp_board() :
 
     global FILES, RANKS
     
+    board = pd.DataFrame([[cp.FakePiece(colour='black')]*8]*8)
+    board.columns = FILES
+    board.index = RANKS
+
+    white = dict()
+    black = dict()
+    
+    board.at[4, 'a'] = cp.Rook('white', name='rook0')
+    board.at[4, 'e'] = cp.Knight('white', name='knight0')
+    board.at[5, 'g'] = cp.Bishop('white', name='bishop0')
+    board.at[6, 'b'] = cp.Knight('black', name='knight0')
+    board.at[7, 'e'] = cp.King('black', name='king0')
+    board.at[6, 'f'] = cp.Knight('black', name='knight1')
+    board.at[4, 'h'] = cp.Rook('black', name='rook0')
+    board.at[5, 'd'] = 0
+    
+    white.update({'bishop0' : 'g5', 'knight0' : 'e4', 'rook0':'a4'})
+    black.update({'knight0':'b6', 'king0':'e7', 'knight1':'f6', 'rook0':'h4'})
+    
+    return board, white, black
+
+
+'''
+def tmp_board() :
+
+    global FILES, RANKS
+    
     board = pd.DataFrame([[0]*8]*8)
     board.columns = FILES
     board.index = RANKS
@@ -27,7 +54,7 @@ def tmp_board() :
                   'pawn1' : 'e6', 'rook0' : 'h5'})
     
     return board, white, black
-
+'''
 '''            
 def f2(n) :
     if n == 0 :

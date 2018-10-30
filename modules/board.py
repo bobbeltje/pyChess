@@ -150,8 +150,15 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     return return_moves
         
 #board, white, black = tmp_board()
-#x = search_move(board, black, white, 4, 1)
+#x = search_move(board, black, white, 0, 1)
 
+#for piece,pos in black.items():
+#    print(piece)
+#    print(pos)
+#    print(
+#    board.at[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
+            )
+    
 def make_move(board, dic, dic_opponent, col) :
     
     moves = get_all_moves(board, dic)
