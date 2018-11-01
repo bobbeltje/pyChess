@@ -90,28 +90,52 @@ def get_all_moves(board, dic) :
             
     return moves
 
+def get_ordered_move_values(moves) :
+    '''
+    Expects a list of all possible moves
+    An element is a tuple: (position, available moves, values)
+    
+    Returns an ordered (decreasing) list of unique values
+    '''
+    values = set()
+    
+    for move in moves :
+        values.update(list(move[2]))
+
+    return sorted(list(values), reverse=True)
+    
+
 def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
     Calculate the next set of best moves
     '''
     available_moves = get_all_moves(board, dic)
-    good_moves = {}
     
-    # extract the highest valued moves
-    # result {'e2e4':0}
-    for piece_idx in range(len(available_moves)) :
-        for move_idx in range(len(available_moves[piece_idx][1])) :
-            if available_moves[piece_idx][2][move_idx] > 0.01 :
-                good_moves[
-                        '{0}{1}{2}'.format(
-                        available_moves[piece_idx][0],
-                        available_moves[piece_idx][1][move_idx][0],
-                        available_moves[piece_idx][1][move_idx][1])
-                        ] = available_moves[piece_idx][2][move_idx] * multiplier
-       
+    ordered_move_values = get_ordered_move_values(available_moves)
+    
+    for value in ordered_move_values :
+        value -= .1
+        
+        good_moves = {}
+        # extract the highest valued moves
+        # result {'e2e4':0}
+        for piece_idx in range(len(available_moves)) :
+            for move_idx in range(len(available_moves[piece_idx][1])) :
+                if available_moves[piece_idx][2][move_idx] > value :
+                    good_moves[
+                            '{0}{1}{2}'.format(
+                            available_moves[piece_idx][0],
+                            available_moves[piece_idx][1][move_idx][0],
+                            available_moves[piece_idx][1][move_idx][1])
+                            ] = available_moves[piece_idx][2][move_idx] * multiplier
+        
+#         TODO
+        break
+        
     if depth == 0 :
-        return good_moves
-         
+        ret_move = random.choice(list(good_moves.keys()))
+        return {ret_move : good_moves[ret_move]}
+     
     deep_moves = []
     return_moves = {}
     for move in good_moves.keys() :
@@ -124,7 +148,16 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         
         # in case piece is taken
         if new_board.at[new_pos] :
-            del new_opp[new_board.at[new_pos].name]
+            try :
+                del new_opp[new_board.at[new_pos].name]
+            except :
+                print(available_moves)
+                print(good_moves)
+                print_debug_board(board, 
+                                  dic, 
+                                  dic_opponent, 
+                                  old=old_pos, 
+                                  new=new_pos)
 
         # move the piece
         new_board.at[new_pos] = new_board.at[old_pos]
@@ -150,14 +183,14 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     return return_moves
         
 #board, white, black = tmp_board()
-#x = search_move(board, black, white, 0, 1)
+x = search_move(board, black, white, 4, 1)
 
 #for piece,pos in black.items():
 #    print(piece)
 #    print(pos)
 #    print(
 #    board.at[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
-            )
+#            )
     
 def make_move(board, dic, dic_opponent, col) :
     
@@ -207,4 +240,26 @@ def make_move(board, dic, dic_opponent, col) :
         
     return dic, dic_opponent
     
+
+def print_debug_board(board, dic, dic_opponent, **kwargs) :
     
+    for rank in range(1, 9) :
+        print(rank)
+        for file in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] :
+            if type(board.at[rank, file]).__name__ not in ('int', 'FakePiece') :
+                print(board.at[rank, file])
+    print()
+    print()
+            
+    print(dic)
+    print(dic_opponent)
+
+    print()
+    print()
+    
+    for key,val in kwargs.items() :
+        print(key)
+        print(val)
+        print()
+
+    'a' + 5
