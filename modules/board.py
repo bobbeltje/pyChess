@@ -109,32 +109,45 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
     Calculate the next set of best moves
     '''
+    print(multiplier)
     available_moves = get_all_moves(board, dic)
     
-    ordered_move_values = get_ordered_move_values(available_moves)
+#    ordered_move_values = get_ordered_move_values(available_moves)
+#    for value in ordered_move_values :
+#        value -= .1
+        
+    good_moves = {}
+    # extract the highest valued moves
+    # result {'e2e4':0}
+    for piece_idx in range(len(available_moves)) :
+        for move_idx in range(len(available_moves[piece_idx][1])) :
+            if abs(round(available_moves[piece_idx][2][move_idx])) == 100 :
+                continue
+            good_moves[
+                    '{0}{1}{2}'.format(
+                    available_moves[piece_idx][0],
+                    available_moves[piece_idx][1][move_idx][0],
+                    available_moves[piece_idx][1][move_idx][1])
+                    ] = available_moves[piece_idx][2][move_idx]
     
-    for value in ordered_move_values :
-        value -= .1
-        
-        good_moves = {}
-        # extract the highest valued moves
-        # result {'e2e4':0}
-        for piece_idx in range(len(available_moves)) :
-            for move_idx in range(len(available_moves[piece_idx][1])) :
-                if available_moves[piece_idx][2][move_idx] > value :
-                    good_moves[
-                            '{0}{1}{2}'.format(
-                            available_moves[piece_idx][0],
-                            available_moves[piece_idx][1][move_idx][0],
-                            available_moves[piece_idx][1][move_idx][1])
-                            ] = available_moves[piece_idx][2][move_idx] * multiplier
-        
-#         TODO
-        break
-        
     if depth == 0 :
-        ret_move = random.choice(list(good_moves.keys()))
-        return {ret_move : good_moves[ret_move]}
+    
+        max_gain = max([val for key,val in good_moves.items()]) - 0.1
+        print('max gain: {}'.format(max_gain))
+        ret_dic = {}
+        for key,val in good_moves.items() :
+            if val > max_gain :
+                ret_dic[key] = val*multiplier
+        
+        try :
+            ret_move = random.choice(list(ret_dic.keys()))
+            print('returning {}'.format({ret_move : good_moves[ret_move]}))
+            return {ret_move : good_moves[ret_move]}
+        except :
+            print(good_moves)
+            print(max_gain)
+            print(ret_dic)
+            print_debug_board(board, dic, dic_opponent)
      
     deep_moves = []
     return_moves = {}
@@ -180,10 +193,17 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         for new_move,val in deep_moves.items() :
             return_moves[move + new_move] = good_moves[move] + val
             
-    return return_moves
-        
-#board, white, black = tmp_board()
-x = search_move(board, black, white, 4, 1)
+    max_gain = max([val*multiplier for key,val in return_moves.items()]) - 0.1
+    ret_dic = {}
+    for key,val in return_moves.items() :
+        if val*multiplier > max_gain :
+            ret_dic[key] = val
+    ret_move = random.choice(list(ret_dic.keys()))
+    
+    return {ret_move : ret_dic[ret_move]}
+            
+board, white, black = tmp_board()
+x = search_move(board, black, white, 0, 1)
 
 #for piece,pos in black.items():
 #    print(piece)
