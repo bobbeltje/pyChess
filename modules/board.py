@@ -109,7 +109,8 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
     Calculate the next set of best moves
     '''
-    print(multiplier)
+
+#    print(multiplier)
     available_moves = get_all_moves(board, dic)
     
 #    ordered_move_values = get_ordered_move_values(available_moves)
@@ -130,10 +131,17 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
                     available_moves[piece_idx][1][move_idx][1])
                     ] = available_moves[piece_idx][2][move_idx]
     
+    if not good_moves :
+        return {'z0z0' : 9999*multiplier}
+    
     if depth == 0 :
     
-        max_gain = max([val for key,val in good_moves.items()]) - 0.1
-        print('max gain: {}'.format(max_gain))
+        try :
+            max_gain = max([val for key,val in good_moves.items()]) - 0.1
+        except :
+            print(good_moves)
+            print_debug_board(board, dic, dic_opponent)
+#        print('max gain: {}'.format(max_gain))
         ret_dic = {}
         for key,val in good_moves.items() :
             if val > max_gain :
@@ -141,8 +149,8 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         
         try :
             ret_move = random.choice(list(ret_dic.keys()))
-            print('returning {}'.format({ret_move : good_moves[ret_move]}))
-            return {ret_move : good_moves[ret_move]}
+#            print('returning {}'.format({ret_move : ret_dic[ret_move]}))
+            return {ret_move : ret_dic[ret_move]}
         except :
             print(good_moves)
             print(max_gain)
@@ -191,7 +199,7 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         
         # return chain of moves with value
         for new_move,val in deep_moves.items() :
-            return_moves[move + new_move] = good_moves[move] + val
+            return_moves[move + new_move] = good_moves[move]*multiplier + val
             
     max_gain = max([val*multiplier for key,val in return_moves.items()]) - 0.1
     ret_dic = {}
@@ -202,8 +210,8 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     
     return {ret_move : ret_dic[ret_move]}
             
-board, white, black = tmp_board()
-x = search_move(board, black, white, 0, 1)
+#board, white, black = tmp_board()
+#x = search_move(board, white, black, 0, 1)
 
 #for piece,pos in black.items():
 #    print(piece)
