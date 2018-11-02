@@ -2,10 +2,10 @@
 import modules.board as boards
 import random
 
-import modules.utils as utils
-import modules.pieces as cp
-from modules.board import *
-from modules.testcode import tmp_board
+#import modules.utils as utils
+#import modules.pieces as cp
+#from modules.board import *
+#from modules.testcode import tmp_board
 
 
 # Note that the indeces of FILES & RANKS go from 0 to 7
@@ -37,7 +37,8 @@ def start_game() :
         print('Move {0}'.format(move))
         for i in (0, 1) :
             
-            pieceList[i], pieceList[1-i] = boards.make_move(board, pieceList[i], pieceList[1-i], colourList[i])
+#            pieceList[i], pieceList[1-i] = boards.make_move(board, pieceList[i], pieceList[1-i], colourList[i])
+            pieceList[i], pieceList[1-i] = boards.make_best_move(board, pieceList[i], pieceList[1-i], colourList[i])
             
         move += 1
 #        input('[enter]')
