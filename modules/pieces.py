@@ -258,7 +258,7 @@ class King() :
                     moves.append((pos[0], pos[1]+step))
                 else :
                     if board[pos[0]][pos[1]+step].get_colour() != self.colour :
-                        moves.append((pos[0], pos[1]+1))
+                        moves.append((pos[0], pos[1]+step))
         
         # check for castling
         
