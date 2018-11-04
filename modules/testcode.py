@@ -1,4 +1,51 @@
+FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+RANKS = [i for i in range(1, 9)]
+from . import pieces as cp
+
 import pandas as pd
+
+def cur_board() :
+
+    global FILES, RANKS
+    
+    board = pd.DataFrame([[0]*8]*8)
+    board.columns = FILES
+    board.index = RANKS
+    
+    board.at[1, 'b'] = cp.Queen('white', 'queen')
+    board.at[1, 'c'] = cp.Bishop('white', 'bishop0')
+    board.at[1, 'f'] = cp.Bishop('white', 'bishop1')
+    board.at[2, 'a'] = cp.Pawn('white', 'pawn0')
+    board.at[2, 'h'] = cp.Rook('white', 'rook0')
+    board.at[3, 'b'] = cp.Rook('white', 'rook1')
+    board.at[3, 'c'] = cp.Knight('white', 'knight0')
+    board.at[3, 'd'] = cp.King('white', 'king')
+    board.at[3, 'g'] = cp.Pawn('white', 'pawn1')
+    board.at[3, 'h'] = cp.Pawn('white', 'pawn2')
+    board.at[4, 'f'] = cp.Pawn('white', 'pawn3')
+    board.at[5, 'b'] = cp.Pawn('white', 'pawn4')
+    board.at[7, 'c'] = cp.Pawn('white', 'pawn5')
+    board.at[8, 'a'] = cp.Rook('black', 'rook0')
+    board.at[8, 'd'] = cp.Queen('black', 'queen')
+    board.at[8, 'e'] = cp.King('black', 'king')
+    board.at[8, 'f'] = cp.Bishop('black', 'bishop0')
+    board.at[8, 'g'] = cp.Knight('black', 'knight0')
+    board.at[8, 'h'] = cp.Rook('black', 'rook1')
+    board.at[7, 'b'] = cp.Bishop('black', 'bishop1')
+    board.at[7, 'g'] = cp.Pawn('black', 'pawn0')
+    board.at[6, 'd'] = cp.Pawn('black', 'pawn1')
+    board.at[6, 'e'] = cp.Pawn('black', 'pawn2')
+    board.at[5, 'd'] = cp.Knight('black', 'knight1')
+    board.at[3, 'a'] = cp.Pawn('black', 'pawn3')
+
+    white = {'queen':'b1', 'bishop0':'c1', 'bishop1':'f1', 'pawn0':'a2',
+             'rook0':'h2', 'rook1':'b3', 'knight0':'c3', 'king':'d3',
+             'pawn1':'g3', 'pawn2':'h3', 'pawn3':'f4', 'pawn4':'b5', 'pawn5':'c7'}
+    black = {'rook0':'a8', 'queen':'d8', 'king':'e8', 'bishop0':'f8',
+             'knight0':'g8', 'rook1':'h8', 'bishop1':'b7','pawn0':'g7',
+             'pawn1':'d6', 'pawn2':'e6', 'knight1':'d5', 'pawn3':'a3'}
+    
+    return board, white, black
 
 def tmp_board() :
 
