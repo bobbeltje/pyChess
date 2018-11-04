@@ -111,12 +111,16 @@ def get_ordered_move_values(moves) :
 
     return sorted(list(values), reverse=True)
     
-
+n = 0 
 def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
     Calculate the next set of best moves
     '''
-
+    global n
+    if depth==2 :
+        print('moves considered: {}'.format(n))
+        
+    n += 1
 #    print(multiplier)
     available_moves = get_all_moves(board, dic)
     
@@ -195,7 +199,7 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         
         # in case of promotion
         if (new_board.at[new_pos].name[:4] == 'pawn' 
-          and new_pos[1] in (1,8) 
+          and new_pos[0] in (1,8) 
           and new_board.at[new_pos].piece_type == 'pawn') :
           
             new_board.at[new_pos] = cp.Queen(new_board.at[new_pos].colour, 

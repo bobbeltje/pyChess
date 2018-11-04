@@ -7,7 +7,6 @@ import random
 #from modules.board import *
 #from modules.testcode import tmp_board
 
-
 # Note that the indeces of FILES & RANKS go from 0 to 7
 FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 RANKS = [i for i in range(1, 9)]
@@ -21,6 +20,7 @@ def start_game() :
     global FILES, RANKS
     
     board, white, black = boards.new_board()
+    
     #for i in range(1, 9) :
     #    print(board.loc[i])
     '''
