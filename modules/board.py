@@ -3,28 +3,24 @@ import pandas as pd
 import random
 #from . import utils
 from . import pieces as cp
-
-FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-RANKS = [i for i in range(1, 9)]
+from . import glob_vars
 
 
 def new_board() :
 
-    global FILES, RANKS
-    
     board = pd.DataFrame([[0]*8]*8)
-    board.columns = FILES
-    board.index = RANKS
+    board.columns = glob_vars.FILES
+    board.index = glob_vars.RANKS
 
     white = dict()
     black = dict()
 
     # add pawns
     for i in range(8) :
-        board.at[7, FILES[i]] = cp.Pawn(colour='black', name='pawn{0}'.format(i))
-        board.at[2, FILES[i]] = cp.Pawn(colour='white', name='pawn'+str(i))
-        white['pawn'+str(i)] = FILES[i] + str(2)
-        black['pawn'+str(i)] = FILES[i] + str(7)
+        board.at[7, glob_vars.FILES[i]] = cp.Pawn(colour='black', name='pawn{0}'.format(i))
+        board.at[2, glob_vars.FILES[i]] = cp.Pawn(colour='white', name='pawn'+str(i))
+        white['pawn'+str(i)] = glob_vars.FILES[i] + str(2)
+        black['pawn'+str(i)] = glob_vars.FILES[i] + str(7)
 
     board.at[1, 'a'] = cp.Rook('white', name='rook0')
     board.at[1, 'b'] = cp.Knight('white', name='knight0')

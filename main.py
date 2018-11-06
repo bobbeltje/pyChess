@@ -7,18 +7,13 @@ import random
 #from modules.board import *
 #from modules.testcode import tmp_board
 
-# Note that the indeces of FILES & RANKS go from 0 to 7
-FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-RANKS = [i for i in range(1, 9)]
 random.seed(5)
 # Note consider using two dictionaries to hold the positions
 
 # strat3 other.value - own.value        
 
 def start_game() :
-    
-    global FILES, RANKS
-    
+        
     players = ['computer', 'computer']
     board, white, black = boards.new_board()
     

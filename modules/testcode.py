@@ -1,16 +1,13 @@
-FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-RANKS = [i for i in range(1, 9)]
 from . import pieces as cp
+from . import glob_vars
 
 import pandas as pd
 
 def cur_board() :
 
-    global FILES, RANKS
-    
     board = pd.DataFrame([[0]*8]*8)
-    board.columns = FILES
-    board.index = RANKS
+    board.columns = glob_vars.FILES
+    board.index = glob_vars.RANKS
     
     board.at[1, 'd'] = cp.Rook('white', 'rook0')
     board.at[1, 'f'] = cp.Rook('white', 'rook1')
@@ -48,11 +45,9 @@ def cur_board() :
 
 def tmp_board() :
 
-    global FILES, RANKS
-    
     board = pd.DataFrame([[cp.FakePiece(colour='black')]*8]*8)
-    board.columns = FILES
-    board.index = RANKS
+    board.columns = glob_vars.FILES
+    board.index = glob_vars.RANKS
 
     white = dict()
     black = dict()
