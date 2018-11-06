@@ -3,6 +3,7 @@ import modules.board as boards
 import modules.glob_vars as glob_vars
 
 import random
+import time
 
 #import modules.utils as utils
 #import modules.pieces as cp
@@ -13,6 +14,8 @@ random.seed(5)
 
 def start_game() :
         
+    start_time = time.time()
+    
     players = ['computer', 'computer']
     board, white, black = boards.new_board()
     
@@ -35,8 +38,11 @@ def start_game() :
                 pieceList[i], pieceList[1-i] = boards.make_human_move(board, pieceList[i], pieceList[1-i], colourList[i])
                             
         move += 1
+#        if move == 10 :
+#            break
 #        input('[enter]')
-    
+            
+    print(start_time - time.time())
     
 if __name__ == '__main__' :
 
