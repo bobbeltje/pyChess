@@ -343,3 +343,42 @@ def print_debug_board(board, dic, dic_opponent, **kwargs) :
         print()
 
     'a' + 5
+
+
+
+def make_human_move(board, dic, dic_opponent, col) :
+    
+    print('Make your move!')
+    new_move = input()
+    
+    piece = new_move[:2]
+    move = (new_move[2], int(new_move[3]))
+
+    # NOTE 
+    # piece in format a1, g2 etc
+    # move in format ('h', 4)
+    print('{0} moves {1} on {2} to {3}{4}'.format(col, board.loc[int(piece[1]), piece[0]].name, piece, move[0], move[1]))
+    
+    # in case piece is taken
+    if board.loc[move[1], move[0]] :
+        if board.loc[move[1], move[0]].name == 'king' :
+            print('\n\n\n')
+        print('taking {0}'.format(board.loc[move[1], move[0]].name))
+        del dic_opponent[board.loc[move[1], move[0]].name]
+        
+    # move piece
+    board.loc[move[1], move[0]] = board.loc[int(piece[1]), piece[0]]
+    # set old location to 0
+    board.loc[int(piece[1]), piece[0]] = 0
+    # update dictionary
+    dic[board.loc[int(move[1]), move[0]].name] = move[0]+str(move[1])
+    
+    # promotion
+    if board.loc[move[1], move[0]].name[:4] == 'pawn' and move[1] in (1,8) and board.loc[move[1], move[0]].piece_type == 'pawn' :
+        print('promotion!')
+        print(dic)
+        print('not' + col)
+        print(dic_opponent)
+        board.at[int(move[1]), move[0]] = cp.Queen(col, name=board.loc[move[1], move[0]].name)
+        
+    return dic, dic_opponent
