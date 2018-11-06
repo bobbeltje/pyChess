@@ -19,6 +19,7 @@ def start_game() :
     
     global FILES, RANKS
     
+    players = ['computer', 'computer']
     board, white, black = boards.new_board()
     
     #for i in range(1, 9) :
@@ -38,8 +39,11 @@ def start_game() :
         for i in (0, 1) :
             
 #            pieceList[i], pieceList[1-i] = boards.make_move(board, pieceList[i], pieceList[1-i], colourList[i])
-            pieceList[i], pieceList[1-i] = boards.make_best_move(board, pieceList[i], pieceList[1-i], colourList[i])
-            
+            if players[i] == 'computer' :
+                pieceList[i], pieceList[1-i] = boards.make_best_move(board, pieceList[i], pieceList[1-i], colourList[i])
+            else :
+                pieceList[i], pieceList[1-i] = boards.make_human_move(board, pieceList[i], pieceList[1-i], colourList[i])
+                            
         move += 1
 #        input('[enter]')
     
