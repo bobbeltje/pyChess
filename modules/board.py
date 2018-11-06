@@ -107,16 +107,15 @@ def get_ordered_move_values(moves) :
 
     return sorted(list(values), reverse=True)
     
-n = 0 
 def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
     Calculate the next set of best moves
     '''
-    global n
+
     if depth==2 :
-        print('moves considered: {}'.format(n))
-        
-    n += 1
+        print('moves considered: {}'.format(glob_vars.moves_considered))
+    glob_vars.moves_considered += 1
+
 #    print(multiplier)
     available_moves = get_all_moves(board, dic)
     

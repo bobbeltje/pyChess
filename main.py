@@ -1,5 +1,6 @@
 
 import modules.board as boards
+import modules.glob_vars as glob_vars
 import random
 
 #import modules.utils as utils
@@ -28,6 +29,7 @@ def start_game() :
     colourList = ['white', 'black']
     
     move = 1
+    glob_vars.moves_considered = 0
     while True :
         
         print('Move {0}'.format(move))
