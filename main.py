@@ -31,7 +31,6 @@ def start_game() :
             
             print('moves considered: {}'.format(glob_vars.moves_considered))
 
-#            pieceList[i], pieceList[1-i] = boards.make_move(board, pieceList[i], pieceList[1-i], colourList[i])
             if players[i] == 'computer' :
                 pieceList[i], pieceList[1-i] = boards.make_best_move(board, pieceList[i], pieceList[1-i], colourList[i])
             else :

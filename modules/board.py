@@ -51,10 +51,8 @@ def get_all_moves(board, dic) :
     '''
     Find all possible moves for the pieces in dic.
     
-    Returns a list of tuples
-    tuple[0] is the position of a piece
-    tuple[1] is the available moves for that piece
-    tuple[2] is the value of pieces it can capture
+    Returns a dictionary
+    {'e2e4':0, ...}
     '''
     
     moves = {}
@@ -194,56 +192,6 @@ def make_best_move(board, dic, dic_opponent, col) :
         
     return dic, dic_opponent
 
-
-def make_move(board, dic, dic_opponent, col) :
-    
-    
-    moves = get_all_moves(board, dic)
-#    strategy 01 : random choice
-#    piece = random.choice(moves)
-#    move = random.choice(piece[1])
-
-#    strategy 02 : first best move
-#    find the highest values each piece can score and the max of those
-    highest_values = [max(k) for i,j,k in moves]
-    max_value = max(highest_values) - 0.01
-#    select one of the pieces that can gain max_value
-    piece = random.choice([move for i,move in enumerate(moves) if max(moves[i][2]) >= max_value])
-#    select one of its moves that gain max_value
-    move = random.choice([idx for idx,val in enumerate(piece[2]) if val >= max_value])
-    move = piece[1][move]
-    
-    piece = piece[0]
-    
-    # NOTE 
-    # piece in format a1, g2 etc
-    # move in format ('h', 4)
-    print('{0} moves {1} on {2} to {3}{4}'.format(col, board.loc[int(piece[1]), piece[0]].name, piece, move[0], move[1]))
-    
-    # in case piece is taken
-    if board.loc[move[1], move[0]] :
-        if board.loc[move[1], move[0]].name == 'king' :
-            print('\n\n\n')
-        print('taking {0}'.format(board.loc[move[1], move[0]].name))
-        del dic_opponent[board.loc[move[1], move[0]].name]
-        
-    # move piece
-    board.loc[move[1], move[0]] = board.loc[int(piece[1]), piece[0]]
-    # set old location to 0
-    board.loc[int(piece[1]), piece[0]] = 0
-    # update dictionary
-    dic[board.loc[int(move[1]), move[0]].name] = move[0]+str(move[1])
-    
-    # promotion
-    if board.loc[move[1], move[0]].name[:4] == 'pawn' and move[1] in (1,8) and board.loc[move[1], move[0]].piece_type == 'pawn' :
-        print('promotion!')
-        print(dic)
-        print('not' + col)
-        print(dic_opponent)
-        board.at[int(move[1]), move[0]] = cp.Queen(col, name=board.loc[move[1], move[0]].name)
-        
-    return dic, dic_opponent
-    
 
 def print_debug_board(board, dic, dic_opponent, **kwargs) :
     
