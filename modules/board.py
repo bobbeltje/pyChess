@@ -57,40 +57,26 @@ def get_all_moves(board, dic) :
     tuple[2] is the value of pieces it can capture
     '''
     
-    moves = []
+    moves = {}
     # per piece find the available moves and put in movelist
     for piece, pos in dic.items() :
-        try :
-            movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(
-                            board, (pos[0], int(pos[1]))
-                            )
-        except :
-            for i in range(3, 8) :
-                print(board.loc[i])
-            print('piece:{0} ; pos0: {1} ; pos1: {2}'.format(piece, 
-                                                             pos[0], 
-                                                             pos[1]))
-            print(dic)
-            'a' + 5
+
+        movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(
+                board, (pos[0], int(pos[1]))
+                )
         
         # if moves are available, find the value of those moves and then append
         if movelist :
-#            values = np.random.normal(len(movelist), scale=0.05)
-            values = [0] * len(movelist)
-            for idx in range(len(movelist)) :
-                rank, file = movelist[idx]
-                try :
-                    if board.loc[file, rank] :
-                        values[idx] = board.loc[file, rank].value
-                except :
-                    print(movelist)
-                    print(piece)
-                    print(pos)
-                    print(print_debug_board(board, dic, 'not_available'))
-                    'a' + 4
+#           
+            for file,rank in movelist :
+                
+                value = 0
+                
+                if board.loc[rank, file] :
+                    value = board.loc[rank, file].value
                     
-            moves.append((pos, movelist, values))
-            
+                moves[pos+file+str(rank)] = value
+
     return moves
 
 def search_move(board, dic, dic_opponent, depth, multiplier) :
@@ -101,51 +87,23 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     glob_vars.moves_considered += 1
 
     available_moves = get_all_moves(board, dic)
-    # result: [(pos, moves, values), (...)]
+    # result: {'e2e4':0, ...}
     
-    good_moves = {}
-    # result {'e2e4':0}
-    for piece_idx in range(len(available_moves)) :
-        for move_idx in range(len(available_moves[piece_idx][1])) :
-            # this if statement makes sure no FakePieces are taken
-            if abs(round(available_moves[piece_idx][2][move_idx])) == 100 :
-                continue
-            good_moves[
-                    '{0}{1}{2}'.format(
-                    available_moves[piece_idx][0],
-                    available_moves[piece_idx][1][move_idx][0],
-                    available_moves[piece_idx][1][move_idx][1])
-                    ] = available_moves[piece_idx][2][move_idx]
-    
-    if not good_moves :
-        return {'z0z0' : 9999*multiplier}
+    max_gain = max(available_moves.values()) - 0.1
     
     if depth == 0 :
     
-        try :
-            max_gain = max([val for key,val in good_moves.items()]) - 0.1
-        except :
-            print(good_moves)
-            print_debug_board(board, dic, dic_opponent)
-#        print('max gain: {}'.format(max_gain))
         ret_dic = {}
-        for key,val in good_moves.items() :
+        for key,val in available_moves.items() :
             if val > max_gain :
                 ret_dic[key] = val*multiplier
         
-        try :
-            ret_move = random.choice(list(ret_dic.keys()))
-#            print('returning {}'.format({ret_move : ret_dic[ret_move]}))
-            return {ret_move : ret_dic[ret_move]}
-        except :
-            print(good_moves)
-            print(max_gain)
-            print(ret_dic)
-            print_debug_board(board, dic, dic_opponent)
+        ret_move = random.choice(list(ret_dic.keys()))
+        return {ret_move : ret_dic[ret_move]}
      
     deep_moves = []
     return_moves = {}
-    for move in good_moves.keys() :
+    for move in available_moves.keys() :
         new_board = board.copy()
         new_dic = dic.copy()
         new_opp = dic_opponent.copy()
@@ -155,17 +113,8 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         
         # in case piece is taken
         if new_board.at[new_pos] :
-            try :
-                del new_opp[new_board.at[new_pos].name]
-            except :
-                print(available_moves)
-                print(good_moves)
-                print_debug_board(board, 
-                                  dic, 
-                                  dic_opponent, 
-                                  old=old_pos, 
-                                  new=new_pos)
-
+            del new_opp[new_board.at[new_pos].name]
+            
         # move the piece
         new_board.at[new_pos] = new_board.at[old_pos]
         new_board.at[old_pos] = 0
@@ -185,7 +134,7 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         
         # return chain of moves with value
         for new_move,val in deep_moves.items() :
-            return_moves[move + new_move] = good_moves[move]*multiplier + val
+            return_moves[move + new_move] = available_moves[move]*multiplier + val
             
     max_gain = max([val*multiplier for key,val in return_moves.items()]) - 0.1
     ret_dic = {}
