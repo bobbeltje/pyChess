@@ -9,22 +9,12 @@ import random
 #from modules.testcode import tmp_board
 
 random.seed(5)
-# Note consider using two dictionaries to hold the positions
-
-# strat3 other.value - own.value        
 
 def start_game() :
         
     players = ['computer', 'computer']
     board, white, black = boards.new_board()
     
-    #for i in range(1, 9) :
-    #    print(board.loc[i])
-    '''
-    print(board)
-    print(white)
-    print(black)
-    #'''
     pieceList = [white, black]
     colourList = ['white', 'black']
     
@@ -44,13 +34,6 @@ def start_game() :
         move += 1
 #        input('[enter]')
     
-    # boards.make_move(board, white)
-    # print(board)
-    # print(pieceList[0])
-    # print(pieceList[1])
-    
-#    for file_ in board.columns :
-#        print(board[file_])
     
 if __name__ == '__main__' :
 
