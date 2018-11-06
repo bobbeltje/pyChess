@@ -98,8 +98,6 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     Calculate the next set of best moves
     '''
 
-    if depth==2 :
-        print('moves considered: {}'.format(glob_vars.moves_considered))
     glob_vars.moves_considered += 1
 
     available_moves = get_all_moves(board, dic)
