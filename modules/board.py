@@ -93,20 +93,6 @@ def get_all_moves(board, dic) :
             
     return moves
 
-def get_ordered_move_values(moves) :
-    '''
-    Expects a list of all possible moves
-    An element is a tuple: (position, available moves, values)
-    
-    Returns an ordered (decreasing) list of unique values
-    '''
-    values = set()
-    
-    for move in moves :
-        values.update(list(move[2]))
-
-    return sorted(list(values), reverse=True)
-    
 def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
     Calculate the next set of best moves
@@ -116,18 +102,14 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         print('moves considered: {}'.format(glob_vars.moves_considered))
     glob_vars.moves_considered += 1
 
-#    print(multiplier)
     available_moves = get_all_moves(board, dic)
+    # result: [(pos, moves, values), (...)]
     
-#    ordered_move_values = get_ordered_move_values(available_moves)
-#    for value in ordered_move_values :
-#        value -= .1
-        
     good_moves = {}
-    # extract the highest valued moves
     # result {'e2e4':0}
     for piece_idx in range(len(available_moves)) :
         for move_idx in range(len(available_moves[piece_idx][1])) :
+            # this if statement makes sure no FakePieces are taken
             if abs(round(available_moves[piece_idx][2][move_idx])) == 100 :
                 continue
             good_moves[
@@ -377,3 +359,21 @@ def make_human_move(board, dic, dic_opponent, col) :
         board.at[int(move[1]), move[0]] = cp.Queen(col, name=board.loc[move[1], move[0]].name)
         
     return dic, dic_opponent
+
+
+# UNUSED 
+    
+def get_ordered_move_values(moves) :
+    '''
+    Expects a list of all possible moves
+    An element is a tuple: (position, available moves, values)
+    
+    Returns an ordered (decreasing) list of unique values
+    '''
+    values = set()
+    
+    for move in moves :
+        values.update(list(move[2]))
+
+    return sorted(list(values), reverse=True)
+    
