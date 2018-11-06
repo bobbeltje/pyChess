@@ -29,6 +29,11 @@ class Pawn() :
         return self.colour
         
     def get_available_moves(self, board, pos) :
+        '''
+        Returns all available moves for piece in pos
+        
+        Format [(rank, file), ...]
+        '''
         
         moves = []
         right_file = utils.get_file(pos[0], 'right', 1)
@@ -99,6 +104,11 @@ class Knight() :
         return self.colour
         
     def get_available_moves(self, board, pos) :
+        '''
+        Returns all available moves for piece in pos
+        
+        Format [(rank, file), ...]
+        '''
         
         moves = []
         
@@ -138,6 +148,11 @@ class Bishop() :
         return self.colour
         
     def get_available_moves(self, board, pos) :
+        '''
+        Returns all available moves for piece in pos
+        
+        Format [(rank, file), ...]
+        '''
         
         moves = []
         
@@ -174,6 +189,11 @@ class Rook() :
         return self.colour
         
     def get_available_moves(self, board, pos) :
+        '''
+        Returns all available moves for piece in pos
+        
+        Format [(rank, file), ...]
+        '''
         
         moves = []
         
@@ -224,6 +244,11 @@ class King() :
         return self.colour
         
     def get_available_moves(self, board, pos) :
+        '''
+        Returns all available moves for piece in pos
+        
+        Format [(rank, file), ...]
+        '''
         
         moves = []
         
@@ -277,6 +302,11 @@ class Queen() :
         return self.colour
         
     def get_available_moves(self, board, pos) :
+        '''
+        Returns all available moves for piece in pos
+        
+        Format [(rank, file), ...]
+        '''
         
         moves = []
         
