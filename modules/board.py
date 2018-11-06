@@ -59,7 +59,7 @@ def get_all_moves(board, dic) :
     # per piece find the available moves and put in movelist
     for piece, pos in dic.items() :
 
-        movelist = board.loc[int(pos[1]), pos[0]].get_available_moves(
+        movelist = board.at[int(pos[1]), pos[0]].get_available_moves(
                 board, (pos[0], int(pos[1]))
                 )
         
@@ -70,8 +70,8 @@ def get_all_moves(board, dic) :
                 
                 value = 0
                 
-                if board.loc[rank, file] :
-                    value = board.loc[rank, file].value
+                if board.at[rank, file] :
+                    value = board.at[rank, file].value
                     
                 moves[pos+file+str(rank)] = value
 
@@ -114,17 +114,17 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
             del new_opp[new_board.at[new_pos].name]
             
         # move the piece
-        new_board.at[new_pos] = new_board.at[old_pos]
-        new_board.at[old_pos] = 0
+        new_board.loc[new_pos] = new_board.at[old_pos]
+        new_board.loc[old_pos] = 0
         # update the dictionary
-        new_dic[new_board.loc[new_pos].name] = new_pos[1] + str(new_pos[0])
+        new_dic[new_board.at[new_pos].name] = new_pos[1] + str(new_pos[0])
         
         # in case of promotion
         if (new_board.at[new_pos].name[:4] == 'pawn' 
           and new_pos[0] in (1,8) 
           and new_board.at[new_pos].piece_type == 'pawn') :
           
-            new_board.at[new_pos] = cp.Queen(new_board.at[new_pos].colour, 
+            new_board.loc[new_pos] = cp.Queen(new_board.at[new_pos].colour, 
                                              name=new_board.at[new_pos].name)
             
         # call recursively
@@ -169,36 +169,36 @@ def make_move(board, dic, dic_opponent, col, player) :
     # move in format ('h', 4)
     print('{0} moves {1} on {2}{3} to {4}{5}'.format(
             col, 
-            board.loc[old_pos].name, 
+            board.at[old_pos].name, 
             old_pos[1],
             old_pos[0], 
             new_pos[1], 
             new_pos[0]))
     
     # in case piece is taken
-    if board.loc[new_pos] :
-        if board.loc[new_pos].name == 'king' :
+    if board.at[new_pos] :
+        if board.at[new_pos].name == 'king' :
             print('\n\n\n')
-        print('taking {0}'.format(board.loc[new_pos].name))
-        del dic_opponent[board.loc[new_pos].name]
+        print('taking {0}'.format(board.at[new_pos].name))
+        del dic_opponent[board.at[new_pos].name]
         
     # move piece
-    board.loc[new_pos] = board.loc[old_pos]
+    board.loc[new_pos] = board.at[old_pos]
     # set old location to 0
     board.loc[old_pos] = 0
     # update dictionary
-    dic[board.loc[new_pos].name] = new_pos[1]+str(new_pos[0])
+    dic[board.at[new_pos].name] = new_pos[1]+str(new_pos[0])
     
     # promotion
-    if (board.loc[new_pos].name[:4] == 'pawn' 
+    if (board.at[new_pos].name[:4] == 'pawn' 
         and new_pos[0] in (1,8) 
-        and board.loc[new_pos].piece_type == 'pawn'
+        and board.at[new_pos].piece_type == 'pawn'
         ):
         print('promotion!')
         print(dic)
         print('not' + col)
         print(dic_opponent)
-        board.at[new_pos] = cp.Queen(col, name=board.loc[new_pos].name)
+        board.loc[new_pos] = cp.Queen(col, name=board.at[new_pos].name)
         
     return dic, dic_opponent
 
