@@ -152,43 +152,53 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
 #    print(
 #    board.at[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
 #            )
-def make_best_move(board, dic, dic_opponent, col) :
     
-    best_move = search_move(board, dic, dic_opponent, depth=2, multiplier=1)
-#    print(best_move)
-    best_move = list(best_move.keys())[0]
-#    print(best_move)
-    piece = best_move[:2]
-    move = (best_move[2], int(best_move[3]))
+def make_move(board, dic, dic_opponent, col, player) :
+    
+    if player == 'computer' :
+
+        best_move = search_move(board, dic, dic_opponent, depth=2, multiplier=1)
+        best_move = list(best_move.keys())[0]
+        old_pos = (int(best_move[1]), best_move[0])
+        new_pos = (int(best_move[3]), best_move[2])
 
 #    print(piece)
 #    print(move)
     # NOTE 
     # piece in format a1, g2 etc
     # move in format ('h', 4)
-    print('{0} moves {1} on {2} to {3}{4}'.format(col, board.loc[int(piece[1]), piece[0]].name, piece, move[0], move[1]))
+    print('{0} moves {1} on {2}{3} to {4}{5}'.format(
+            col, 
+            board.loc[old_pos].name, 
+            old_pos[1],
+            old_pos[0], 
+            new_pos[1], 
+            new_pos[0]))
     
     # in case piece is taken
-    if board.loc[move[1], move[0]] :
-        if board.loc[move[1], move[0]].name == 'king' :
+    if board.loc[new_pos] :
+        if board.loc[new_pos].name == 'king' :
             print('\n\n\n')
-        print('taking {0}'.format(board.loc[move[1], move[0]].name))
-        del dic_opponent[board.loc[move[1], move[0]].name]
+        print('taking {0}'.format(board.loc[new_pos].name))
+        del dic_opponent[board.loc[new_pos].name]
         
     # move piece
-    board.loc[move[1], move[0]] = board.loc[int(piece[1]), piece[0]]
+    board.loc[new_pos] = board.loc[old_pos]
     # set old location to 0
-    board.loc[int(piece[1]), piece[0]] = 0
+    board.loc[old_pos] = 0
     # update dictionary
-    dic[board.loc[int(move[1]), move[0]].name] = move[0]+str(move[1])
+    dic[board.loc[new_pos].name] = new_pos[1]+str(new_pos[0])
     
     # promotion
-    if board.loc[move[1], move[0]].name[:4] == 'pawn' and move[1] in (1,8) and board.loc[move[1], move[0]].piece_type == 'pawn' :
+    if (board.loc[new_pos].name[:4] == 'pawn' 
+        and new_pos[0] in (1,8) 
+        and board.loc[new_pos].piece_type == 'pawn'
+        ):
         print('promotion!')
         print(dic)
         print('not' + col)
         print(dic_opponent)
-        board.at[int(move[1]), move[0]] = cp.Queen(col, name=board.loc[move[1], move[0]].name)
+        board.at[new_pos] = cp.Queen(col, name=board.loc[new_pos].name)
         
     return dic, dic_opponent
 

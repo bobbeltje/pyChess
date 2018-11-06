@@ -31,10 +31,12 @@ def start_game() :
             
             print('moves considered: {}'.format(glob_vars.moves_considered))
 
-            if players[i] == 'computer' :
-                pieceList[i], pieceList[1-i] = boards.make_best_move(board, pieceList[i], pieceList[1-i], colourList[i])
-            else :
-                pieceList[i], pieceList[1-i] = boards.make_human_move(board, pieceList[i], pieceList[1-i], colourList[i])
+            pieceList[i], pieceList[1-i] = boards.make_move(
+                    board, 
+                    pieceList[i], 
+                    pieceList[1-i], 
+                    colourList[i],
+                    players[i])
                             
         move += 1
 #        if move == 10 :
