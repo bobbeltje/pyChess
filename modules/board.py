@@ -250,7 +250,6 @@ def make_human_move() :
 def is_check_mate(board, dic, dic_opponent) :
     
     best_move = search_move(board, dic, dic_opponent, depth=1, multiplier=1)
-        
     max_gain = abs(max(best_move.values()))
     
     if max_gain > 999 :

@@ -42,9 +42,9 @@ def start_game() :
                     players[i],
                     depth=1)
             
-            if boards.is_check_mate(board, pieceList[1-i], pieceList[i]) :
-                
-                print('{} has won the game!'.format(colourList[i]))
+#            if boards.is_check_mate(board, pieceList[1-i], pieceList[i]) :
+            if 'king' not in pieceList[i] :
+                print('{} has won the game!'.format(colourList[1-i]))
                 game_over = True
                             
         if game_over :
