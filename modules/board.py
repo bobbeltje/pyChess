@@ -198,6 +198,7 @@ def make_move(board, dic, dic_opponent, col, player, depth) :
         
     # move piece
     board.loc[new_pos] = board.at[old_pos]
+    board.loc[new_pos].moved = True
     # set old location to 0
     board.loc[old_pos] = 0
     # update dictionary

@@ -21,6 +21,7 @@ class Pawn() :
         
         self.piece_type = 'pawn'
         self.colour = colour
+        self.moved = False
         self.enpassant = False
         self.name = name
         self.value = 1.
@@ -97,6 +98,7 @@ class Knight() :
         
         self.piece_type = 'knight'
         self.colour = colour
+        self.moved = False
         self.name = name
         self.value = 2.5
 
@@ -141,6 +143,7 @@ class Bishop() :
         
         self.piece_type = 'bishop'
         self.colour = colour
+        self.moved = False
         self.name = name
         self.value = 3.
 
@@ -261,7 +264,6 @@ class King() :
                         if not board[new_file][pos[1]+step] :
                             moves.append((new_file, pos[1]+step))
                         else :
-                            piece_encountered = True
                             if board[new_file][pos[1]+step].get_colour() != self.colour :
                                 moves.append((new_file, pos[1]+step))
         
@@ -286,7 +288,32 @@ class King() :
                         moves.append((pos[0], pos[1]+step))
         
         # check for castling
-        
+#        if not self.moved :
+#            if self.colour == 'white' :
+#                if board.at[1, 'a'] :
+#                    if not board.at[1, 'a'].moved :
+#                        if not board.at[1, 'b'] :
+#                            if not board.at[1, 'c'] :
+#                                if not board.at[1, 'd'] :
+#                                    moves.append('O-O-O')
+#                if board.at[1, 'h'] :
+#                    if not board.at[1, 'h'].moved :
+#                        if not board.at[1, 'g'] :
+#                            if not board.at[1, 'f'] :
+#                                moves.append('O-O')
+#            if self.colour == 'black' :
+#                if board.at[8, 'a'] :
+#                    if not board.at[8, 'a'].moved :
+#                        if not board.at[8, 'b'] :
+#                            if not board.at[8, 'c'] :
+#                                if not board.at[8, 'd'] :
+#                                    moves.append('O-O-O')
+#                if board.at[8, 'h'] :
+#                    if not board.at[8, 'h'].moved :
+#                        if not board.at[8, 'g'] :
+#                            if not board.at[8, 'f'] :
+#                                moves.append('O-O')
+                                
         return moves
 
 class Queen() :
@@ -295,6 +322,7 @@ class Queen() :
         
         self.piece_type = 'queen'
         self.colour = colour
+        self.moved = False
         self.name = name
         self.value = 10.
 

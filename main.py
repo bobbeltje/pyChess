@@ -30,6 +30,8 @@ def start_game() :
     glob_vars.moves_considered = 0
     while True :
         
+        print()
+        print()
         print('Move {0}'.format(move))
         for i in (0, 1) :
             
