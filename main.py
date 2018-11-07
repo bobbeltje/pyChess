@@ -17,11 +17,11 @@ def start_game() :
     
     pause_every_ten_moves = True
     game_over = False
-    div = 32.
+    div = 1*32. # first value corresponds to the starting depth
     start_time = time.time()
     
-    players = ['computer', 'computer']
-    board, white, black = boards.new_board()
+    players = ['human', 'computer']
+    board, white, black = boards.start_board()
     
     pieceList = [white, black]
     colourList = ['white', 'black']

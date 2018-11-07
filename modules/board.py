@@ -6,7 +6,7 @@ from . import pieces as cp
 from . import glob_vars
 
 
-def new_board() :
+def start_board() :
 
     board = pd.DataFrame([[0]*8]*8)
     board.columns = glob_vars.FILES
@@ -127,6 +127,18 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
         # update the dictionary
         new_dic[new_board.at[new_pos].name] = new_pos[1] + str(new_pos[0])
         
+        # in case of castle
+        if new_board.at[new_pos].name[:4] == 'king' and not new_board.at[new_pos].moved :
+            new_board.at[new_pos].moved = True
+            if new_pos[1] == 'g' :
+                new_board.loc[new_pos[0], 'f'] = new_board.at[new_pos[0], 'h']
+                new_board.loc[new_pos[0], 'h'] = 0
+                dic[new_board.at[new_pos[0], 'f'].name] = 'f'+str(new_pos[0])
+            if new_pos[1] == 'c' :
+                new_board.loc[new_pos[0], 'd'] = new_board.at[new_pos[0], 'a']
+                new_board.loc[new_pos[0], 'a'] = 0
+                dic[new_board.at[new_pos[0], 'd'].name] = 'd'+str(new_pos[0])
+                
         # in case of promotion
         if (new_board.at[new_pos].name[:4] == 'pawn' 
           and new_pos[0] in (1,8) 
@@ -198,11 +210,25 @@ def make_move(board, dic, dic_opponent, col, player, depth) :
         
     # move piece
     board.loc[new_pos] = board.at[old_pos]
-    board.loc[new_pos].moved = True
     # set old location to 0
     board.loc[old_pos] = 0
     # update dictionary
     dic[board.at[new_pos].name] = new_pos[1]+str(new_pos[0])
+        
+    # in case of castle
+    if board.at[new_pos].name == 'king' and not board.at[new_pos].moved :
+        print()
+        print('castled!')
+        print()
+        board.at[new_pos].moved = True
+        if new_pos[1] == 'g' :
+            board.loc[new_pos[0], 'f'] = board.at[new_pos[0], 'h']
+            board.loc[new_pos[0], 'h'] = 0
+            dic[board.at[new_pos[0], 'f'].name] = 'f'+str(new_pos[0])
+        if new_pos[1] == 'c' :
+            board.loc[new_pos[0], 'd'] = board.at[new_pos[0], 'a']
+            board.loc[new_pos[0], 'a'] = 0
+            dic[board.at[new_pos[0], 'd'].name] = 'd'+str(new_pos[0])
     
     # promotion
     if (board.at[new_pos].name[:4] == 'pawn' 
