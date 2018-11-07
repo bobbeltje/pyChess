@@ -89,6 +89,14 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     
     max_gain = max(available_moves.values()) - 0.1
     
+    if max_gain > 999 :
+        for key,val in available_moves.items() :
+            if val > 999 :
+                ret_dic = {key : val*multiplier}
+                break
+        
+        return ret_dic
+    
     if depth == 0 :
     
         ret_dic = {}
@@ -153,11 +161,11 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
 #    board.at[int(pos[1]), pos[0]].get_available_moves(board, (pos[0], int(pos[1])))
 #            )
     
-def make_move(board, dic, dic_opponent, col, player) :
+def make_move(board, dic, dic_opponent, col, player, depth) :
     
     if player == 'computer' :
 
-        best_move = search_move(board, dic, dic_opponent, depth=2, multiplier=1)
+        best_move = search_move(board, dic, dic_opponent, depth=depth, multiplier=1)
         best_move = list(best_move.keys())[0]
         old_pos = (int(best_move[1]), best_move[0])
         new_pos = (int(best_move[3]), best_move[2])
@@ -233,12 +241,23 @@ def print_debug_board(board, dic, dic_opponent, **kwargs) :
     'a' + 5
 
 
-
 def make_human_move() :
     
     print('Make your move!')
     return input()
 
+
+def is_check_mate(board, dic, dic_opponent) :
+    
+    best_move = search_move(board, dic, dic_opponent, depth=1, multiplier=1)
+        
+    max_gain = abs(max(best_move.values()))
+    
+    if max_gain > 999 :
+        
+        return True
+    
+    return False
 
 # UNUSED 
     

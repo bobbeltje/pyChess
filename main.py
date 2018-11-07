@@ -13,7 +13,10 @@ import time
 random.seed(5)
 
 def start_game() :
-        
+    
+    pause_every_ten_moves = True
+    game_over = False
+    
     start_time = time.time()
     
     players = ['computer', 'computer']
@@ -36,9 +39,25 @@ def start_game() :
                     pieceList[i], 
                     pieceList[1-i], 
                     colourList[i],
-                    players[i])
+                    players[i],
+                    depth=1)
+            
+            if boards.is_check_mate(board, pieceList[1-i], pieceList[i]) :
+                
+                print('{} has won the game!'.format(colourList[i]))
+                game_over = True
                             
+        if game_over :
+            
+            break
+        
         move += 1
+        
+        if pause_every_ten_moves and move % 10 == 0 :
+            print()
+            print(white)
+            print(black)
+#            input('Press [enter]')
 #        if move == 10 :
 #            break
 #        input('[enter]')
