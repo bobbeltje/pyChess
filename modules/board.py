@@ -83,7 +83,7 @@ def search_move(board, dic, dic_opponent, depth, multiplier) :
     '''
 
     glob_vars.moves_considered += 1
-
+    
     available_moves = get_all_moves(board, dic)
     # result: {'e2e4':0, ...}
     
@@ -246,10 +246,11 @@ def make_move(board, dic, dic_opponent, col, player, depth) :
 
 def print_debug_board(board, dic, dic_opponent, **kwargs) :
     
+    
     for rank in range(1, 9) :
-        print(rank)
         for file in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] :
             if type(board.at[rank, file]).__name__ not in ('int', 'FakePiece') :
+                print(file+str(rank))
                 print(board.at[rank, file])
     print()
     print()
