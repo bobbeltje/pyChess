@@ -4,6 +4,12 @@ from . import glob_vars
 import pandas as pd
 
 def cur_board() :
+    '''
+    Function to create a specific configuration of the board.
+    
+    Note that when starting with new cur_board
+    whether king or rooks have moved already.
+    '''
 
     board = pd.DataFrame([[0]*8]*8)
     board.columns = glob_vars.FILES
